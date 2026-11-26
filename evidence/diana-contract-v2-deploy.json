@@ -1,0 +1,123 @@
+{
+  "network": "QoreChain Diana testnet (qorechain-diana)",
+  "evm_chain_id": 9800,
+  "evm_rpc": "https://evm-testnet.qore.host",
+  "contract": "FuturePostReleaseV2",
+  "source": "contracts/FuturePostReleaseV2.sol",
+  "artifact": "artifacts/FuturePostReleaseV2.json",
+  "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+  "evm_version": "shanghai",
+  "optimizer": {
+    "enabled": true,
+    "runs": 200
+  },
+  "contract_address": "0x475b2c0BCaE1f1Fd029A514224A86d600Fe97287",
+  "deploy_tx_hash": "0x4d3eac621bbd4efecd52c9c9b1e78c5eaeecdd0a7c932cf5b9e7028aaa7c1c2e",
+  "block_number": 10782517,
+  "block_hash": "0x92f06d560f172666113bfc89f78de9771799ab0ac8703eaafbfb2905c7a59f5c",
+  "block_time_utc": "2026-11-26T10:10:59Z",
+  "deployer": "0x768310cBCD782BDa4fd3cf5Bbb96b6E291E3F103",
+  "deployer_qor_address": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq",
+  "receipt_status": "success",
+  "gas_used": 544043,
+  "effective_gas_price_wei": "112500000000",
+  "deploy_attempts": 1,
+  "deployed_runtime_bytes": 2271,
+  "runtime_matches_artifact": true,
+  "runtime_compare_field": "deployedRuntimeBytecode (runtime with the fixed immutable PQC_KEY_STATUS filled in by scripts/compile.mjs)",
+  "pqc_precompile": {
+    "name": "pqcKeyStatus",
+    "address": "0x0000000000000000000000000000000000000a02",
+    "literal_in_runtime": true,
+    "runtime_offsets": [
+      280,
+      1349
+    ],
+    "configurable": false,
+    "active_on_diana": "listed in active_static_precompiles of /cosmos/evm/vm/v1/params at deploy time"
+  },
+  "rule": "registerLetter requires pqcKeyStatus(msg.sender) to report registered=true, algorithmId=1 (ML-DSA-87) and possessionProven=true; a failed, empty or malformed answer reverts PrecompileInactiveOrMalformed(). releaseShareB keeps v1's sender, time and commitment checks without a key check.",
+  "evm_window": {
+    "open": {
+      "tx_hash": "2F08BE425AC3645ED98F5D951F73C249F4BEB6158FAC45D5A925F759EDA6AB17",
+      "height": 10782504,
+      "code": 0,
+      "message": "MsgOpenEVMWindow",
+      "signature": "PQCHybridSignature",
+      "blocks": 100,
+      "max_txs": 1,
+      "max_value_uqor": 200000,
+      "scope": "bounded by blocks, transactions and value; no allowed_targets because a targets-scoped window refuses contract creation"
+    },
+    "used": {
+      "used_txs": 1,
+      "used_value_uqor": 162500,
+      "note": "fee bound of the one deploy transaction (650,000 gas limit x 250 gwei fee cap)"
+    },
+    "close": {
+      "tx_hash": "82211B9AAF1698BD450FF80F1F7FB669E3468581EF1BBCC0B2B50B69705935FE",
+      "height": 10782526,
+      "code": 0,
+      "message": "MsgCloseEVMWindow",
+      "signature": "PQCHybridSignature"
+    },
+    "after_close": "query pqc evm-window: found=false, live=false"
+  },
+  "preflight_read_only": {
+    "pqcKeyStatus_of_deployer_before_deploy": {
+      "registered": true,
+      "algorithmId": 1,
+      "pubkey_bytes": 2592,
+      "possessionProven": true
+    },
+    "creation_simulation": "eth_call of the creation code plus a registerLetter call from a key-less caller returned runtime equal to the artifact and SenderKeyNotProven(false, 0, false)"
+  },
+  "read_only_verification_after_deploy": {
+    "checkedAtBlock": "10782600",
+    "contract": "0x475b2c0BCaE1f1Fd029A514224A86d600Fe97287",
+    "runtimeBytes": 2271,
+    "runtimeMatchesArtifact": true,
+    "runtimeContainsPrecompileLiteral": true,
+    "PQC_KEY_STATUS": "0x0000000000000000000000000000000000000a02",
+    "pqcKeyStatusOfSender": {
+      "account": "0x768310cBCD782BDa4fd3cf5Bbb96b6E291E3F103",
+      "registered": true,
+      "algorithmId": 1,
+      "pubkeyBytes": 2592,
+      "possessionProven": true
+    },
+    "registerLetterSimulation": {
+      "provenSender": {
+        "from": "0x768310cBCD782BDa4fd3cf5Bbb96b6E291E3F103",
+        "passes": true
+      },
+      "unregisteredSender": {
+        "from": "0x000000000000000000000000000000000000dEaD",
+        "passes": false,
+        "revert": {
+          "name": "SenderKeyNotProven",
+          "args": [
+            false,
+            0,
+            false
+          ]
+        }
+      }
+    }
+  },
+  "verify_command": "npm run verify:diana-v2",
+  "evidence_separation": {
+    "ml_dsa_87": "This contract's rule uses the ML-DSA-87 key (algorithm 1) with proof of possession, registered by MsgRegisterPQCKeyV2 tx C48AB7252E742E4E479F8CDA07976760DA0DFEAF8BBB904E22CEEA53A9DB14CD (height 10780438).",
+    "ml_kem_1024": "The ML-KEM-1024 key in the KEM key registry (tx 25C7547930CB389AFA7742EFAF53D232B65DBFA38EE6B0D9CC64F82DC49FB10A, see evidence/kem-registry-roundtrip.json) is separate encryption evidence and is not what this contract checks."
+  },
+  "scope": "Deployment and read-only checks of FuturePostReleaseV2. The recipient binding is an opaque hash; the rule applies to the sender. No letter was registered or released on V2. v1 (0x0E5e1b9d41bFCe8a19f5dA4E55Dd6459F69E2b50) is unchanged and remains the demo contract.",
+  "explorer": {
+    "transaction": "https://explore.qore.network/tx/0x4d3eac621bbd4efecd52c9c9b1e78c5eaeecdd0a7c932cf5b9e7028aaa7c1c2e",
+    "address": "https://explore.qore.network/address/0x475b2c0BCaE1f1Fd029A514224A86d600Fe97287",
+    "note": "Open with the explorer switched to Testnet."
+  },
+  "related_evidence": [
+    "evidence/diana-contract-deploy.json",
+    "evidence/diana-testnet-activity.json"
+  ]
+}

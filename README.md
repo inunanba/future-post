@@ -51,6 +51,28 @@ curl -s -X POST -H 'content-type: application/json' https://evm-testnet.qore.hos
 
 The returned code is the 1,560-byte runtime of `artifacts/FuturePostRelease.json`. Reading a letter id that does not exist returns the contract's own `LetterMissing()` error, as designed. Details are in [evidence/diana-contract-deploy.json](evidence/diana-contract-deploy.json). The deployer is a single-purpose testnet-only account funded from the official Diana faucet. This entry covers the contract deployment; registering and releasing a letter on this contract is the next step.
 
+### FuturePostReleaseV2: letters only from a proven post-quantum key
+
+`FuturePostReleaseV2` keeps the same letter policy as v1 and adds one rule: a letter can be registered only by a sender whose account has a registered **ML-DSA-87** key with **proof of possession**, as reported by QoreChain's PQC Key Status precompile `pqcKeyStatus` at `0x0000000000000000000000000000000000000a02`.
+
+- `registerLetter` makes a read-only `staticcall` to the fixed precompile and requires `registered && algorithmId == 1 && possessionProven`. A missing, reverting or malformed answer stops registration with `PrecompileInactiveOrMalformed()`; a sender without a proven key gets `SenderKeyNotProven(registered, algorithmId, possessionProven)`.
+- `releaseShareB` keeps v1's sender, time and commitment checks and does not repeat the key check, so a letter that was valid when it was registered can always be released on time, even after a key rotation.
+- The precompile address is fixed in the source (no constructor argument, no setter) and appears as a full 20-byte literal in the deployed runtime.
+- The recipient binding stays an opaque hash; V2 adds a sender-side key rule.
+
+v1 above remains the contract used in the demo and the video.
+
+| | |
+|---|---|
+| Contract address | `0x475b2c0BCaE1f1Fd029A514224A86d600Fe97287` |
+| Deploy transaction | `0x4d3eac621bbd4efecd52c9c9b1e78c5eaeecdd0a7c932cf5b9e7028aaa7c1c2e` |
+| Block | 10782517 (2026-11-26 10:10:59 UTC), receipt status success, gas used 544,043 |
+| Explorer | [transaction](https://explore.qore.network/tx/0x4d3eac621bbd4efecd52c9c9b1e78c5eaeecdd0a7c932cf5b9e7028aaa7c1c2e) / [contract](https://explore.qore.network/address/0x475b2c0BCaE1f1Fd029A514224A86d600Fe97287) (switch the explorer to Testnet) |
+| Deployer | `qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq` (`0x768310cBCD782BDa4fd3cf5Bbb96b6E291E3F103`) |
+| EVM window | opened for exactly one transaction (100 blocks, 1 transaction, 0.2 QOR fee bound) in `2F08BE42…AB17`, closed in `82211B9A…35FE` |
+
+Read-only check (no transaction, no keys): `npm run verify:diana-v2`. It confirms that the on-chain runtime (2,271 bytes) equals `deployedRuntimeBytecode` in `artifacts/FuturePostReleaseV2.json` and contains `0x…0a02`, that `pqcKeyStatus` reports the deployer as `registered=true`, `algorithmId=1`, `possessionProven=true` (2,592-byte ML-DSA-87 public key), that a simulated `registerLetter` from the deployer passes, and that the same call from an address without a key reverts with `SenderKeyNotProven(false, 0, false)`. Details: [evidence/diana-contract-v2-deploy.json](evidence/diana-contract-v2-deploy.json). Local tests (`test/contract-v2.test.js`) deploy the same production artifact on a local EVM with test code placed at `0x…0a02`, covering the proven, unregistered, not-proven, wrong-algorithm, inactive and malformed cases and release after key removal.
+
 ## What works now
 
 - Responsive letter composer and locked/ready states.
@@ -96,8 +118,9 @@ All on QoreChain Diana (`qorechain-diana`, EVM chain 9800). Machine-readable cop
 |---|---|
 | `qor1rgsq0sgpww6yevnmedlqe797tc4v57u4as0w52` | Team QoreX account: registered its hybrid post-quantum key, linked to the Build Before Q-Day site, sent the fingerprint commitment and a transfer |
 | `qor1r274urptm66u0kn6eujalcl0v7sz5tj0tus05t` | QoreX Ethereum-type (coin 60) account of the same wallet: received a 10 QOR test transfer |
-| `qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq` (`0x768310cBCD782BDa4fd3cf5Bbb96b6E291E3F103`) | Single-purpose testnet deployer: registered its post-quantum key, opened and closed an EVM window, deployed the contract, published its ML-KEM-1024 key |
+| `qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq` (`0x768310cBCD782BDa4fd3cf5Bbb96b6E291E3F103`) | Single-purpose testnet deployer: registered its post-quantum key, opened and closed EVM windows, deployed both contracts, published its ML-KEM-1024 key |
 | `0x0E5e1b9d41bFCe8a19f5dA4E55Dd6459F69E2b50` | `FuturePostRelease` contract |
+| `0x475b2c0BCaE1f1Fd029A514224A86d600Fe97287` | `FuturePostReleaseV2` contract (registration checks `pqcKeyStatus`) |
 
 | Transaction | Height | What |
 |---|---|---|
@@ -111,6 +134,9 @@ All on QoreChain Diana (`qorechain-diana`, EVM chain 9800). Machine-readable cop
 | `0x97090531c63c695af28ff1791e0cdc01800ef11439238f56aa32efb7a293281d` | 10780460 | Deployer: `FuturePostRelease` deployment |
 | `EDE2074CDD0D1A5A2D73B6DD2394D9F1A9190D9F8C5464486235E5A4C9108A79` | 10780475 | Deployer: EVM window closed |
 | `25C7547930CB389AFA7742EFAF53D232B65DBFA38EE6B0D9CC64F82DC49FB10A` | 10780940 | Deployer: ML-KEM-1024 key published in the KEM key registry |
+| `2F08BE425AC3645ED98F5D951F73C249F4BEB6158FAC45D5A925F759EDA6AB17` | 10782504 | Deployer: EVM window opened for one transaction (100 blocks, 1 transaction, 0.2 QOR bound) |
+| `0x4d3eac621bbd4efecd52c9c9b1e78c5eaeecdd0a7c932cf5b9e7028aaa7c1c2e` | 10782517 | Deployer: `FuturePostReleaseV2` deployment |
+| `82211B9AAF1698BD450FF80F1F7FB669E3468581EF1BBCC0B2B50B69705935FE` | 10782526 | Deployer: EVM window closed |
 
 Read any Cosmos transaction at `https://api-testnet.qore.host/cosmos/tx/v1beta1/txs/<HASH>`; the EVM deployment is read through the EVM RPC (see above).
 
@@ -126,7 +152,7 @@ The contract records policy and timing. It does not create cryptographic time by
 
 ## Release contract
 
-`contracts/FuturePostRelease.sol` records the sender, hashed recipient binding, opening time, ciphertext hash, and B commitment. Only the sender can publish a 32-byte B after the opening time; an early call, wrong sender, duplicate release, or commitment mismatch reverts. The contract compiled with Solidity 0.8.30. It is not deployed and has not been externally audited.
+`contracts/FuturePostRelease.sol` records the sender, hashed recipient binding, opening time, ciphertext hash, and B commitment. Only the sender can publish a 32-byte B after the opening time; an early call, wrong sender, duplicate release, or commitment mismatch reverts. The contract compiled with Solidity 0.8.30 and is deployed on Diana (see above). `contracts/FuturePostReleaseV2.sol` adds the `pqcKeyStatus` sender rule described in the V2 section.
 
 ## QoreSeal integration boundary
 
@@ -186,7 +212,7 @@ npm ci --ignore-scripts --no-audit --no-fund
 npm run check
 ```
 
-The test command compiles the contract with pinned solc 0.8.30 before testing. Thirty-eight test cases pass, including the official QoreSeal browser-proof core, an in-memory EVM deployment/registration/release path, and negative calls. Ganache runs without a listening server; its ephemeral accounts are unrelated to Diana. Its optional native µWS module may fall back to JavaScript.
+The test command compiles both contracts with pinned solc 0.8.30 before testing. Forty test cases pass, including the official QoreSeal browser-proof core, an in-memory EVM deployment/registration/release path, negative calls, and the V2 `pqcKeyStatus` rule exercised on the unchanged production artifact. Ganache runs without a listening server; its ephemeral accounts are unrelated to Diana. Its optional native µWS module may fall back to JavaScript.
 
 See the [Native evidence runbook](NATIVE_RUNBOOK.md). `npm run prepare:diana -- reviewed-public-input.json` creates an unsigned plan only. It never connects a signer or broadcasts. `wallet-check.html` asks the installed QoreX native provider for a Diana public account only; real extension/browser behavior remains to be verified. The main screen now centers the private first-day welcome and runs the bundled official QoreSeal ML-KEM proof. The timed A/B composer remains a local prototype; registering and releasing a letter on the deployed Diana contract is the next step.
 

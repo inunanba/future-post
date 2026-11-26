@@ -49,6 +49,7 @@ The idea of a time-locked letter is not claimed as new.
 - Public demo: https://inunanba.github.io/future-post/
 - Featured image PNG/WebP: INCLUDED — 1200×675 source, PNG and WebP
 - Diana contract address: `0x0E5e1b9d41bFCe8a19f5dA4E55Dd6459F69E2b50` (`FuturePostRelease`, tx `0x97090531c63c695af28ff1791e0cdc01800ef11439238f56aa32efb7a293281d`, block 10780460)
+- Diana contract address (V2, sender must hold a proven ML-DSA-87 key via `pqcKeyStatus` `0x…0a02`): `0x475b2c0BCaE1f1Fd029A514224A86d600Fe97287` (`FuturePostReleaseV2`, tx `0x4d3eac621bbd4efecd52c9c9b1e78c5eaeecdd0a7c932cf5b9e7028aaa7c1c2e`, block 10782517)
 - Sender address: `qor1rgsq0sgpww6yevnmedlqe797tc4v57u4as0w52` (Diana testnet)
 - Reviewed fingerprint address: `qor1rgsq0sgpww6yevnmedlqe797tc4v57u4as0w52` (self-commitment only; not KEM registration)
 - KEM registry lookup: PASS for the single-purpose testnet account `qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq` (tx `25C7547930CB389AFA7742EFAF53D232B65DBFA38EE6B0D9CC64F82DC49FB10A`, height 10780940). The browser proof screen still uses fresh in-browser keys and does not read the registry.
@@ -60,6 +61,7 @@ The idea of a time-locked letter is not claimed as new.
 - Exact package: `@qorechain/qoreseal@0.1.0`
 - Local tests: 38/38 PASS at CHECKPOINT-06; browser bundle build PASS
 - Solidity compile: 0.8.30 PASS; deployed runtime on Diana matches `artifacts/FuturePostRelease.json` (1,560 bytes)
+- V2 deployed runtime on Diana matches `artifacts/FuturePostReleaseV2.json` (2,271 bytes, contains `0x…0a02`); read-only `npm run verify:diana-v2` PASS (proven deployer passes, key-less address gets `SenderKeyNotProven`)
 - Demo video URL: UNKNOWN
 
 ## Security limits

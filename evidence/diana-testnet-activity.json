@@ -3,8 +3,9 @@
   "addresses": [
     {"address": "qor1rgsq0sgpww6yevnmedlqe797tc4v57u4as0w52", "role": "Team QoreX account (secp256k1). Registered its hybrid post-quantum key, linked to the Build Before Q-Day site, and sent the hybrid-signed fingerprint commitment and a transfer."},
     {"address": "qor1r274urptm66u0kn6eujalcl0v7sz5tj0tus05t", "role": "QoreX Ethereum-type (coin 60) account of the same wallet. Received a 10 QOR test transfer."},
-    {"address": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq", "evm": "0x768310cBCD782BDa4fd3cf5Bbb96b6E291E3F103", "role": "Single-purpose testnet deployer. Registered its post-quantum key, opened and closed an EVM window, deployed FuturePostRelease and published its ML-KEM-1024 key."},
-    {"address": "0x0E5e1b9d41bFCe8a19f5dA4E55Dd6459F69E2b50", "role": "FuturePostRelease contract (EVM)."}
+    {"address": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq", "evm": "0x768310cBCD782BDa4fd3cf5Bbb96b6E291E3F103", "role": "Single-purpose testnet deployer. Registered its post-quantum key, opened and closed EVM windows, deployed FuturePostRelease and FuturePostReleaseV2, and published its ML-KEM-1024 key."},
+    {"address": "0x0E5e1b9d41bFCe8a19f5dA4E55Dd6459F69E2b50", "role": "FuturePostRelease contract (EVM)."},
+    {"address": "0x475b2c0BCaE1f1Fd029A514224A86d600Fe97287", "role": "FuturePostReleaseV2 contract (EVM). registerLetter checks pqcKeyStatus (0x...0a02)."}
   ],
   "transactions": [
     {"hash": "D7C896FCB667982525BD3A10BAABD2E60674ED773827C362C322967C4F333118", "height": 10704698, "from": "qor1rgsq0sgpww6yevnmedlqe797tc4v57u4as0w52", "what": "MsgRegisterPQCKeyV2 (hybrid, with proof of possession)"},
@@ -16,7 +17,10 @@
     {"hash": "4E6A1BA6B69EE4DA1812F0F5369F5635291C5136DF0D76D08798C2542BB20672", "height": 10780449, "from": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq", "what": "MsgOpenEVMWindow (300 blocks, 3 transactions, 1 QOR cap), PQCHybridSignature"},
     {"hash": "0x97090531c63c695af28ff1791e0cdc01800ef11439238f56aa32efb7a293281d", "height": 10780460, "from": "0x768310cBCD782BDa4fd3cf5Bbb96b6E291E3F103", "what": "EVM deployment of FuturePostRelease at 0x0E5e1b9d41bFCe8a19f5dA4E55Dd6459F69E2b50"},
     {"hash": "EDE2074CDD0D1A5A2D73B6DD2394D9F1A9190D9F8C5464486235E5A4C9108A79", "height": 10780475, "from": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq", "what": "MsgCloseEVMWindow, PQCHybridSignature"},
-    {"hash": "25C7547930CB389AFA7742EFAF53D232B65DBFA38EE6B0D9CC64F82DC49FB10A", "height": 10780940, "from": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq", "what": "MsgRegisterKEMKey (ML-KEM-1024), PQCHybridSignature"}
+    {"hash": "25C7547930CB389AFA7742EFAF53D232B65DBFA38EE6B0D9CC64F82DC49FB10A", "height": 10780940, "from": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq", "what": "MsgRegisterKEMKey (ML-KEM-1024), PQCHybridSignature"},
+    {"hash": "2F08BE425AC3645ED98F5D951F73C249F4BEB6158FAC45D5A925F759EDA6AB17", "height": 10782504, "from": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq", "what": "MsgOpenEVMWindow (100 blocks, 1 transaction, 0.2 QOR bound), PQCHybridSignature"},
+    {"hash": "0x4d3eac621bbd4efecd52c9c9b1e78c5eaeecdd0a7c932cf5b9e7028aaa7c1c2e", "height": 10782517, "from": "0x768310cBCD782BDa4fd3cf5Bbb96b6E291E3F103", "what": "EVM deployment of FuturePostReleaseV2 at 0x475b2c0BCaE1f1Fd029A514224A86d600Fe97287"},
+    {"hash": "82211B9AAF1698BD450FF80F1F7FB669E3468581EF1BBCC0B2B50B69705935FE", "height": 10782526, "from": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq", "what": "MsgCloseEVMWindow, PQCHybridSignature"}
   ],
   "quantum_pass_requirements": {
     "create-qorechain-dapp": "scaffold-provenance.json (create-qorechain-dapp 0.14.0, template evm-solidity, network testnet)",
