@@ -1,0 +1,26 @@
+{
+  "network": "QoreChain Diana testnet (qorechain-diana)",
+  "evm_chain_id": 9800,
+  "evm_rpc": "https://evm-testnet.qore.host",
+  "contract": "FuturePostRelease",
+  "contract_address": "0x0E5e1b9d41bFCe8a19f5dA4E55Dd6459F69E2b50",
+  "deploy_tx_hash": "0x97090531c63c695af28ff1791e0cdc01800ef11439238f56aa32efb7a293281d",
+  "block_number": 10780460,
+  "block_hash": "0x642ba31fb7042796db5fa8b434704e4eae42a2dff4346048f82055efe6dd9356",
+  "block_time_utc": "2026-11-26T09:22:04Z",
+  "deployer": "0x768310cBCD782BDa4fd3cf5Bbb96b6E291E3F103",
+  "deployer_qor_address": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq",
+  "deployer_note": "Single-purpose testnet-only account, funded from the official Diana faucet; used only for this deployment.",
+  "gas_used": 390651,
+  "receipt_status": "success",
+  "deployed_runtime_bytes": 1560,
+  "runtime_matches_artifact": true,
+  "artifact": "artifacts/FuturePostRelease.json",
+  "explorer": {
+    "transaction": "https://explore.qore.network/tx/0x97090531c63c695af28ff1791e0cdc01800ef11439238f56aa32efb7a293281d",
+    "address": "https://explore.qore.network/address/0x0E5e1b9d41bFCe8a19f5dA4E55Dd6459F69E2b50",
+    "note": "Open with the explorer switched to Testnet."
+  },
+  "read_check": "getLetter(0x1111...1111) on the deployed contract returns the contract's own LetterMissing() error for an id that has no letter, as designed.",
+  "scope": "Deployment of the release contract. Registering and releasing a letter on this contract is a separate step and is not claimed here."
+}

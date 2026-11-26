@@ -19,7 +19,7 @@ The source tree contains README, MIT LICENSE, AI usage disclosure, package and l
 
 ## Evidence and content checks
 
-- Remote tree: 83 blobs; 79 text-like blobs scanned.
+- Remote tree: 84 blobs; 80 text-like blobs scanned.
 - Required-artifact check: 15/15 present.
 - README relative links: all targets present.
 - Secret-like filenames: 0.

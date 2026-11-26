@@ -31,6 +31,26 @@ The reviewed Diana fingerprint commitment can be read back on QoreChain testnet:
 
 The independent readback is height **10719012**, code **0**. The memo is `future-post:v1|kem-fp|3f6cffdb4cd083ae855a3f5cc074eac70fa92b7c4fc8b565d95e520a80c6a358` (one `1 uqor` self-transfer). This transaction is a public-key fingerprint commitment, not KEM registration or live decryption proof.
 
+## Deployed on QoreChain Diana testnet
+
+The `FuturePostRelease` contract is deployed on the QoreChain Diana testnet (EVM chain 9800).
+
+| | |
+|---|---|
+| Contract address | `0x0E5e1b9d41bFCe8a19f5dA4E55Dd6459F69E2b50` |
+| Deploy transaction | `0x97090531c63c695af28ff1791e0cdc01800ef11439238f56aa32efb7a293281d` |
+| Block | 10780460 (2026-11-26 09:22:04 UTC), receipt status success |
+| Explorer | [transaction](https://explore.qore.network/tx/0x97090531c63c695af28ff1791e0cdc01800ef11439238f56aa32efb7a293281d) / [contract](https://explore.qore.network/address/0x0E5e1b9d41bFCe8a19f5dA4E55Dd6459F69E2b50) (switch the explorer to Testnet) |
+
+Check it yourself with any EVM JSON-RPC client:
+
+```bash
+curl -s -X POST -H 'content-type: application/json' https://evm-testnet.qore.host \
+  --data '{"jsonrpc":"2.0","id":1,"method":"eth_getCode","params":["0x0E5e1b9d41bFCe8a19f5dA4E55Dd6459F69E2b50","latest"]}'
+```
+
+The returned code is the 1,560-byte runtime of `artifacts/FuturePostRelease.json`. Reading a letter id that does not exist returns the contract's own `LetterMissing()` error, as designed. Details are in [evidence/diana-contract-deploy.json](evidence/diana-contract-deploy.json). The deployer is a single-purpose testnet-only account funded from the official Diana faucet. This entry covers the contract deployment; registering and releasing a letter on this contract is the next step.
+
 ## What works now
 
 - Responsive letter composer and locked/ready states.
