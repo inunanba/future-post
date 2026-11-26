@@ -12,6 +12,6 @@ try {
   if (!status.registered) throw Error("No KEM key registered for " + address);
   const sha = createHash("sha256").update(status.publicKey).digest("hex");
   const envelope = await sealToAddresses({ rest, chainId: "qorechain-diana", purpose: "future-post-welcome", mode: "mlkem", recipients: [{ address }], plaintext: new TextEncoder().encode("verification note") });
-  console.log(JSON.stringify({ address, algorithm: status.algorithmName, registeredHeight: String(status.registeredHeight), keySha256: sha, matchesEvidence: sha === evidence.registration.key_sha256, sealedEnvelopeBytes: envelope.length }, null, 2));
-  if (sha !== evidence.registration.key_sha256) process.exitCode = 1;
+  console.log(JSON.stringify({ address, algorithm: status.algorithmName, registeredHeight: String(status.registeredHeight), keySha256: sha, matchesEvidence: sha === evidence.registration.public_key_fingerprint_sha256, sealedEnvelopeBytes: envelope.length }, null, 2));
+  if (sha !== evidence.registration.public_key_fingerprint_sha256) process.exitCode = 1;
 } catch (e) { console.error("NOT_VERIFIED:", e.message); process.exitCode = 1; }

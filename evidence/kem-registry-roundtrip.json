@@ -9,7 +9,7 @@
     "code": 0,
     "signature": "PQCHybridSignature (secp256k1 + ML-DSA-87), events pqc_hybrid_verify and pqc_kem_key_registered",
     "algorithm": "mlkem1024 (algorithm_id 2)",
-    "key_sha256": "4e5aa34f3a76618b64d8a0ec8b8b43e2b43d5446371bff586d9c1c343783b49c",
+    "public_key_fingerprint_sha256": "4e5aa34f3a76618b64d8a0ec8b8b43e2b43d5446371bff586d9c1c343783b49c",
     "registry_read": "https://api-testnet.qore.host/qorechain/pqc/v1/kem/qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq"
   },
   "local_roundtrip": {
