@@ -1,5 +1,4 @@
 {
-  "request_id": "R-20261125-grokbot-work-qorechain-build-01",
   "network": "qorechain-diana",
   "evm_chain_id": 9800,
   "source_commit": "UNKNOWN",
