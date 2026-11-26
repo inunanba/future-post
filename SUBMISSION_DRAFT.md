@@ -1,6 +1,6 @@
 # Build Before Q-Day submission draft
 
-Status: internal draft. Do not publish or paste into the event site until the owner has registered and the live Diana evidence fields are complete.
+Status: internal draft aligned with the public README as of 2026-11-26. The official form pack lives in the team's internal notes. Do not press Submit until the owner has approved the saved form and the YouTube URL.
 
 ## Project name
 
@@ -28,7 +28,7 @@ The main demo uses separate sender and recipient accounts. A letter to your futu
 
 The browser creates a random AES-256 content key and encrypts the letter with AES-GCM. It creates random share A and computes share B as `contentKey XOR A`.
 
-Share A is sealed with official `@qorechain/qoreseal@0.1.0`. The current evidence is a real local ML-KEM-1024 seal/open with matching-recipient success and outsider refusal. The one reviewed website-originated KEM-registration attempt was rejected before signature because QoreX manages that message itself, so no registry claim is made. A separate normal Diana self-transfer may commit the reviewed public-key fingerprint; that commitment does not prove registration or decryption. Chain id, letter id, recipient, and opening time are authenticated as envelope context.
+Share A is sealed with official `@qorechain/qoreseal@0.1.0`. The current evidence is a real local ML-KEM-1024 seal/open with matching-recipient success and outsider refusal. A QoreX-originated website attempt to register a KEM key was refused by the wallet (one attempt, no retry). Separately, a single-purpose testnet account later published an ML-KEM-1024 key with the official CLI (`MsgRegisterKEMKey`, tx `25C75479…FB10A`, height 10780940), and a local seal-to-address and open round trip against that on-chain key passed. A QoreX hybrid-signed self-transfer also committed a reviewed public-key fingerprint (tx `A6633E0F…0A0E27`, height 10719012). Chain id, letter id, recipient, and opening time are authenticated as envelope context.
 
 `FuturePostRelease.sol` records the sender, recipient binding, opening time, ciphertext hash, and B commitment. Only the sender may release a matching 32-byte B after the opening time. QoreX is the transaction boundary: the dApp does not read a mnemonic, seed, or private key.
 
@@ -48,18 +48,18 @@ The idea of a time-locked letter is not claimed as new.
 - Public repository: https://github.com/inunanba/future-post
 - Public demo: https://inunanba.github.io/future-post/
 - Featured image PNG/WebP: INCLUDED — 1200×675 source, PNG and WebP
-- Diana contract address: UNKNOWN
+- Diana contract address: `0x0E5e1b9d41bFCe8a19f5dA4E55Dd6459F69E2b50` (`FuturePostRelease`, tx `0x97090531c63c695af28ff1791e0cdc01800ef11439238f56aa32efb7a293281d`, block 10780460)
 - Sender address: `qor1rgsq0sgpww6yevnmedlqe797tc4v57u4as0w52` (Diana testnet)
 - Reviewed fingerprint address: `qor1rgsq0sgpww6yevnmedlqe797tc4v57u4as0w52` (self-commitment only; not KEM registration)
-- KEM registry lookup: NOT APPLICABLE TO CURRENT PROOF; website registration BLOCKED_CAPABILITY / no retry
+- KEM registry lookup: PASS for the single-purpose testnet account `qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq` (tx `25C7547930CB389AFA7742EFAF53D232B65DBFA38EE6B0D9CC64F82DC49FB10A`, height 10780940). The browser proof screen still uses fresh in-browser keys and does not read the registry.
 - Public-key fingerprint anchor: PASS — code 0, height 10719012, tx `A6633E0F8D41F77FA8414EF62C2EE3CF1943686781E60EDC36D0FF6FC90A0E27`; exact 1 uqor self-transfer memo read back
-- Early release rejection transaction/call: UNKNOWN
-- Accepted B release transaction: UNKNOWN
-- Correct-recipient open evidence: local official-QoreSeal ML-KEM proof PASS; live reviewed-key flow UNKNOWN
-- Outsider refusal: local official-QoreSeal proof PASS (`NOT_A_RECIPIENT`); live reviewed-key flow UNKNOWN
+- Early release rejection: local in-memory EVM tests PASS; a live Diana register/release of a letter on the deployed contract is a separate step
+- Accepted B release on Diana: a separate step (the contract is deployed; a letter has not yet been registered or released on it)
+- Correct-recipient open evidence: local official-QoreSeal ML-KEM proof PASS, including a local seal-to-address and open against the on-chain registered key
+- Outsider refusal: local official-QoreSeal proof PASS (`NOT_A_RECIPIENT`), including the on-chain-key round trip
 - Exact package: `@qorechain/qoreseal@0.1.0`
 - Local tests: 38/38 PASS at CHECKPOINT-06; browser bundle build PASS
-- Solidity compile: 0.8.30 PASS; deployed bytecode UNKNOWN
+- Solidity compile: 0.8.30 PASS; deployed runtime on Diana matches `artifacts/FuturePostRelease.json` (1,560 bytes)
 - Demo video URL: UNKNOWN
 
 ## Security limits

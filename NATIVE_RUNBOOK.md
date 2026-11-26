@@ -12,7 +12,7 @@ This route follows the one-attempt QoreX rejection of `/qorechain.pqc.v1.MsgRegi
 
 ## 1. Preserve the blocked registry result
 
-The single reviewed attempt was rejected by QoreX before any signature prompt: `MsgRegisterKEMKey is managed by the wallet itself, not by a website`. Record `BLOCKED_CAPABILITY / REJECTED_OR_FAILED_NO_RETRY`. Do not retry, change message id, use another wallet, or claim registration.
+The single reviewed website-originated attempt was rejected by QoreX before any signature prompt: `MsgRegisterKEMKey is managed by the wallet itself, not by a website`. Do not retry that website path, change the message id, or use another wallet for the same website request. Separately, a single-purpose testnet account later published an ML-KEM-1024 key with the official CLI (`MsgRegisterKEMKey`, tx `25C7547930CB389AFA7742EFAF53D232B65DBFA38EE6B0D9CC64F82DC49FB10A`, height 10780940); see evidence/kem-registry-roundtrip.json.
 
 ## 2. Run the local ML-KEM functional proof
 
@@ -67,7 +67,7 @@ The builder rejects an early chain time or a share that does not match the commi
 
 ## 7. Recipient proof
 
-On the recipient device, use the reviewed recipient key material and public bundle plus confirmed prepare/release anchors and share B. Open sealed share A with the recipient private KEM key, recombine the two shares, and decrypt with the immutable associated data. Record device identity, bundle digest, tx hashes, heights, receipt codes and plaintext digest. Do not record private keys or plaintext. Website KEM registration remains `BLOCKED_CAPABILITY`; do not describe this step as reading a registered KEM entry.
+On the recipient device, use the reviewed recipient key material and public bundle plus confirmed prepare/release anchors and share B. Open sealed share A with the recipient private KEM key, recombine the two shares, and decrypt with the immutable associated data. Record device identity, bundle digest, tx hashes, heights, receipt codes and plaintext digest. Do not record private keys or plaintext. The website-originated registration path stays unused. A later CLI registration on a single-purpose testnet account is documented in evidence/kem-registry-roundtrip.json; a two-device open that reads that registered entry is a separate step.
 
 ## Stop conditions
 

@@ -1,6 +1,6 @@
 # Security design checkpoint
 
-Status: **B protocol selected by GrokBot/Sena on 2026-11-23. Implemented locally; testnet evidence pending.**
+Status: **B protocol selected on 2026-11-23.** Implemented locally, with live Diana evidence for the fingerprint commitment, the `FuturePostRelease` deployment, an EVM window, and an ML-KEM-1024 key in the on-chain registry. A letter register/release on the deployed contract is a separate step.
 
 ## What QoreSeal proves
 

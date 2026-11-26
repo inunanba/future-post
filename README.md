@@ -169,13 +169,13 @@ QoreSeal 0.1.0 is pre-1.0 and its construction is pending external review, so AP
 
 ## 2026-11-25 live-build checkpoint
 
-Category proposal: **Quantum Pass**, one category for this project. See [build strategy](BUILD_PLAN_2026-11-25.md). The reviewed KEM-registration call was rejected by QoreX before signature and must not be retried. Local ML-KEM seal/open passes in the browser. The normal-transfer public-key fingerprint anchor passed independent REST/RPC readback: code 0 at height 10719012. This is a fingerprint commitment, not KEM registration or decryption proof. This checkpoint does not claim qualification or payout.
+Category proposal: **Quantum Pass**, one category for this project. See [build strategy](BUILD_PLAN_2026-11-25.md). A website-originated KEM-registration call was rejected by QoreX before signature and was not retried. Local ML-KEM seal/open passes in the browser. The normal-transfer public-key fingerprint anchor passed independent REST/RPC readback: code 0 at height 10719012. Separately, a single-purpose testnet account published an ML-KEM-1024 key (tx `25C75479…FB10A`, height 10780940) and `FuturePostRelease` is deployed at `0x0E5e1b9d41bFCe8a19f5dA4E55Dd6459F69E2b50` (block 10780460). This checkpoint does not claim qualification or payout.
 
 | Quantum Pass requirement | Artifact / verification | Current state |
 |---|---|---|
 | Official scaffolder | create-qorechain-dapp 0.14.0 / evm-solidity / testnet; scaffold-provenance.json and quantum-pass/ | Generated and adapted locally, credited |
-| QoreX connection | hybrid-proof.html / src/qorex-session.js | One reviewed Diana fingerprint transaction signed once and read back; full release connection NOT_RUN |
-| Testnet deployment | artifacts/FuturePostRelease.json and unsigned planner | Local EVM deployed/tested; Diana NOT_RUN |
+| QoreX connection | hybrid-proof.html / src/qorex-session.js | One reviewed Diana fingerprint transaction signed once and read back; a letter register/release on the deployed contract is the next connection step |
+| Testnet deployment | artifacts/FuturePostRelease.json and unsigned planner | Deployed on Diana at `0x0E5e1b9d41bFCe8a19f5dA4E55Dd6459F69E2b50`, tx `0x97090531…3281d`, block 10780460 |
 | Hybrid transaction | wallet receipt classification and independent chain-readback runbook | PASS for fingerprint commitment: code 0, height 10719012, hybrid verify events; EVM receipt is not hybrid proof |
 | Regional / Top-Quality | Official prize rules | Conditional alternatives for otherwise unawarded projects, no guarantee |
 
@@ -188,7 +188,7 @@ npm run check
 
 The test command compiles the contract with pinned solc 0.8.30 before testing. Thirty-eight test cases pass, including the official QoreSeal browser-proof core, an in-memory EVM deployment/registration/release path, and negative calls. Ganache runs without a listening server; its ephemeral accounts are unrelated to Diana. Its optional native µWS module may fall back to JavaScript.
 
-See the [Native evidence runbook](NATIVE_RUNBOOK.md). `npm run prepare:diana -- reviewed-public-input.json` creates an unsigned plan only. It never connects a signer or broadcasts. `wallet-check.html` asks the installed QoreX native provider for a Diana public account only; real extension/browser behavior remains to be verified. The main screen now centers the private first-day welcome and runs the bundled official QoreSeal ML-KEM proof. The timed A/B composer remains a local prototype; full Diana release is NOT_RUN.
+See the [Native evidence runbook](NATIVE_RUNBOOK.md). `npm run prepare:diana -- reviewed-public-input.json` creates an unsigned plan only. It never connects a signer or broadcasts. `wallet-check.html` asks the installed QoreX native provider for a Diana public account only; real extension/browser behavior remains to be verified. The main screen now centers the private first-day welcome and runs the bundled official QoreSeal ML-KEM proof. The timed A/B composer remains a local prototype; registering and releasing a letter on the deployed Diana contract is the next step.
 
 ### Public two-device handoff and receipt states
 
@@ -205,7 +205,7 @@ The implemented browser proof directly uses official @qorechain/qoreseal 0.1.0. 
 
 ### Checkpoint 05: honest hybrid proof boundary
 
-The product benefit is a private welcome letter waiting for a new colleague on their first day. `npm run prove:mlkem` demonstrates official ML-KEM-1024 seal/open for the intended recipient and `NOT_A_RECIPIENT` refusal for an outsider without printing plaintext or private material. `npm run prepare:hybrid-proof -- reviewed-public-kem-fingerprint.json` creates an unsigned Diana plan for one `1 uqor` Account 1 self-transfer whose memo commits the reviewed public-key fingerprint. The guarded `hybrid-proof.html` page decodes and checks that exact MsgSend before allowing one wallet request. This transaction is a fingerprint commitment, not KEM registration or decryption proof. GROKBOT-08 records the one-attempt chain result: code 0 at height 10719012, exact memo and one 1 uqor self-transfer read back, with QoreChain hybrid verification events. Website KEM registration remains `BLOCKED_CAPABILITY`; full live decryption remains `NOT_RUN`.
+The product benefit is a private welcome letter waiting for a new colleague on their first day. `npm run prove:mlkem` demonstrates official ML-KEM-1024 seal/open for the intended recipient and `NOT_A_RECIPIENT` refusal for an outsider without printing plaintext or private material. `npm run prepare:hybrid-proof -- reviewed-public-kem-fingerprint.json` creates an unsigned Diana plan for one `1 uqor` Account 1 self-transfer whose memo commits the reviewed public-key fingerprint. The guarded `hybrid-proof.html` page decodes and checks that exact MsgSend before allowing one wallet request. This transaction is a fingerprint commitment, not KEM registration or decryption proof. GROKBOT-08 records the one-attempt chain result: code 0 at height 10719012, exact memo and one 1 uqor self-transfer read back, with QoreChain hybrid verification events. A website-originated KEM registration was refused once by QoreX and was not retried. An ML-KEM-1024 key was later published from a single-purpose testnet account with the official CLI, and a local seal/open against that on-chain key passed. A live two-device letter release on the deployed contract is a separate step.
 
 
 ### Checkpoint 06: reader-first browser proof
