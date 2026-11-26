@@ -1,6 +1,6 @@
-# Security design checkpoint
+# Security design
 
-Status: **B protocol selected on 2026-11-23.** Implemented locally, with live Diana evidence for the fingerprint commitment, the `FuturePostRelease` deployment, the `FuturePostReleaseV2` deployment (registration requires the sender's proven ML-DSA-87 key via `pqcKeyStatus`), bounded EVM windows, and an ML-KEM-1024 key in the on-chain registry. A letter register/release on the deployed contract is a separate step.
+Status: **B protocol selected on 2026-11-23.** Implemented locally, with live Diana evidence for the fingerprint commitment, the `FuturePostRelease` deployment, the `FuturePostReleaseV2` deployment (registration requires the sender's proven ML-DSA-87 key via `pqcKeyStatus`), bounded EVM windows, and an ML-KEM-1024 key in the on-chain registry. A demo letter was registered and released on `FuturePostReleaseV2` after its opening time (see the README, "Live letter on Diana"); it was a single-account demo, so the two-account property rests on the protocol and the local tests.
 
 ## What QoreSeal proves
 
@@ -47,11 +47,11 @@ Proceed with these parts under the selected B protocol:
 4. Correct-recipient and outsider-open tests using QoreSeal.
 5. ML-DSA/QoreX signing boundary for seal/open receipts.
 6. Contract schema and early-call rejection as an audit trail, described as policy enforcement rather than cryptographic time.
-7. No testnet-success claim until a registered owner key and transaction evidence exist.
+7. Testnet-success claims only with a registered key and transaction evidence (now recorded: see the README).
 
 ## Decision and claim boundary
 
-GrokBot/Sena selected **B — sender release**:
+The project selected **B — sender release**:
 
 - A random AES-256 content key is split as `K = A XOR B`.
 - A is sealed to the registered recipient with QoreSeal.

@@ -27,5 +27,5 @@ export function buildDianaPlan(input,artifact){
       tx.data=encodeFunctionData({abi:artifact.abi,functionName:'releaseShareB',args:[input.letterId,input.shareB]});
     }else throw Error('Unsupported operation');
   }
-  return {status:'UNSIGNED_NOT_SENT',operation:input.operation,transaction:tx,warning:'Sena must independently check current chain, account, window, simulation, nonce and approval before signing. EVM success alone is not native hybrid-signature evidence.'};
+  return {status:'UNSIGNED_NOT_SENT',operation:input.operation,transaction:tx,warning:'The operator must independently check current chain, account, window, simulation, nonce and approval before signing. EVM success alone is not native hybrid-signature evidence.'};
 }

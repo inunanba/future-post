@@ -1,7 +1,7 @@
 # Public repository readiness audit
 
-Audit date: 2026-11-26 JST  
-Audited public tip: `a0352b3ef4b29219a0e9ced2d4ed477b2557df18`  
+Audit date: 2026-11-26 JST (refreshed after the live letter and native swap)  
+Initially audited public tip: `a0352b3ef4b29219a0e9ced2d4ed477b2557df18`  
 Scope: Future Post project tree  
 Status: **PUBLIC REPOSITORY PUBLISHED**
 
@@ -19,17 +19,16 @@ The source tree contains README, MIT LICENSE, AI usage disclosure, package and l
 
 ## Evidence and content checks
 
-- Remote tree: 87 blobs; 83 text-like blobs scanned.
-- Required-artifact check: 15/15 present.
+- Required-artifact check (`npm run audit:public`): all required files present.
 - README relative links: all targets present.
 - Secret-like filenames: 0.
 - High-confidence secret patterns: 0 matches (private PEM, common API/token prefixes, assigned 64-hex EVM private key).
-- Browser proof: independently observed by GrokBot/Sena on 2026-11-25 19:16 JST — intended `OPENED`, outsider `REFUSED`, no console error and no wallet popup.
-- Test suite: 38/38 PASS on Work and Sena environments.
+- Browser proof: independently observed on 2026-11-25 19:16 JST — intended `OPENED`, outsider `REFUSED`, no console error and no wallet popup.
+- Test suite: 41/41 PASS (`npm run check`), also from a fresh clone with `npm ci --ignore-scripts`.
 - Dependency audit: runtime (`npm audit --omit=dev`) reports 0 vulnerabilities. Including development tooling (ganache/solc chain), `npm audit` reports 10 advisories (low 1, moderate 2, high 6, critical 1); these are dev-tooling only, are not shipped in the public browser bundle or GitHub Pages site, and are not fixed in this release.
-- Live-chain statement is limited to the reviewed fingerprint commitment. It does not claim KEM registration or live decryption.
+- Live-chain evidence: the fingerprint commitment, the ML-KEM-1024 registry key, two release contracts, the demo letter register/release on V2, and a native AMM swap, each with hashes in the README and `evidence/`. Claims are limited to single-account demonstrations; two-device release is not claimed.
 
-The pattern scan is a repository-content guard, not a replacement for the designated pre-publication gitleaks check. Publication remains outside Work's authority.
+The pattern scan is a repository-content guard; gitleaks is also run on each change before it is pushed.
 
 ## Reproduce
 
@@ -42,4 +41,4 @@ npm run check
 
 ## Publication baton
 
-Owner GO (2026-11-26, t1873u) authorized creation of this public repository. A designated gitleaks check is required on the published history and working tree before and after push. Contest form submission remains a separate owner step and was not performed as part of this publication.
+The owner authorized creation of this public repository on 2026-11-26. Gitleaks is run on the staged tree before each push.

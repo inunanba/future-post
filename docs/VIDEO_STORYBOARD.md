@@ -1,6 +1,6 @@
 # Video storyboard (maximum 3 minutes)
 
-Target: about 1:35, screen-only, no face or owner voice. GROKBOT-10 repairs are applied; do not record until Sena accepts this revision.
+Target: about 1:35, screen-only, no face or owner voice. The review repairs are applied to this revision.
 
 | Time | Screen | Narration / caption | Evidence shown |
 |---|---|---|---|
@@ -18,7 +18,7 @@ Use the real app and the exact evidence above. Capture the proof card only after
 
 For the composer shot, open `index.html?shot=1` and use Account 1 `qor1rgsq0sgpww6yevnmedlqe797tc4v57u4as0w52`. Shot mode hides only the local receipt row, opening-day control and lower note; the normal app keeps them. After submitting, frame **Your letter is waiting**, LOCKED, the countdown and Recipient. Do not press **Prepare share B release**.
 
-Do not show a wallet signature, contract deployment, registered-key flow, or release transaction. Use the live transaction URL already linked by the app. Record only after Sena reviews this revision and the fact-check sheet.
+Do not show a wallet signature or key registration flow. Use the live transaction URL already linked by the app. Optional closing shot (within the 3-minute limit): the explorer page of the live letter's release transaction.
 
 Credits caption: `Created by inunanba · QoreSeal and QoreChain developer kits · Future Post original UI and artwork · AI-assisted development disclosed in the repository`
 

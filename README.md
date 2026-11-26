@@ -1,27 +1,59 @@
 # Future Post / 未来の自分へのポスト
 
-A personal note for someone’s first day. Write it ahead of time, address it to their QoreChain identity, and release it when the day arrives. The recipient opens the note; the sender can check the release record.
+**Future Post lets you write a private letter today that opens, for its intended QoreChain recipient only, on a day you choose.** A typical use is a welcome note waiting for a new colleague's first morning; the same flow works for a promise, a birthday or a note to your future self.
 
-The design keeps the letter body on the client and uses recipient encryption to support that experience. The sender actively releases the second share; it is not an unattended email scheduler.
+**The problem.** A message encrypted to a recipient's key can be opened by that recipient at once, and a countdown in an app does not change that. Future Post splits the letter key in two. Share A is sealed to the recipient's post-quantum key with QoreSeal (ML-KEM-1024). Share B stays with the sender and is published on QoreChain by a release contract only after the opening time. The contract refuses an earlier release, and the second version accepts letters only from senders whose account holds a proven post-quantum signing key (ML-DSA-87, checked on chain through the `pqcKeyStatus` precompile).
 
-Created by **inunanba**. License: [MIT](LICENSE).
+**Who benefits.** The sender gets a public, checkable release record. The recipient gets a letter that only they can read. Outsiders, storage providers and classical-key-only attackers see ciphertext and a commitment.
 
-> Current evidence level: **working product prototype with live Diana evidence**. The main screen runs official QoreSeal ML-KEM-1024 seal/open with intended-recipient success and outsider refusal in the browser. On the QoreChain Diana testnet there are QoreX hybrid-signed transactions, the `FuturePostRelease` contract deployment, an EVM window opened and closed, and an ML-KEM-1024 key published in the on-chain KEM key registry with a local seal-to-address and open round trip. See [Testnet addresses and transactions](#testnet-addresses-and-transactions).
+The sender actively releases the second share; this is a deliberate, auditable release, not an unattended email scheduler.
+
+Created by **inunanba**. License: [MIT](LICENSE). Category: Quantum Pass.
+
+### Live on QoreChain Diana testnet
+
+| What | Evidence |
+|---|---|
+| Full time-lock flow: register, wait for the opening time, release | `registerLetter` [`0xe7d5a114…`](https://explore.qore.network/tx/0xe7d5a114fe884bb605bd8b89fe5627d00a9e12f35b6a148adae53ceec4fb2469) (block 10782943) then `releaseShareB` [`0x575d7e8a…`](https://explore.qore.network/tx/0x575d7e8a35aa97218ade2c3b0b670203f62fd30c3a44a72571fee8fe9490e09c) (block 10783071), recipient opened the letter afterwards: [Live letter on Diana](#live-letter-on-diana) |
+| Release contract V2 with on-chain post-quantum key check | [`0x475b2c0B…7287`](https://explore.qore.network/address/0x475b2c0BCaE1f1Fd029A514224A86d600Fe97287): [FuturePostReleaseV2](#futurepostreleasev2-letters-only-from-a-proven-post-quantum-key) |
+| Release contract V1 (the original deployment) | [`0x0E5e1b9d…2b50`](https://explore.qore.network/address/0x0E5e1b9d41bFCe8a19f5dA4E55Dd6459F69E2b50), block 10780460 |
+| ML-KEM-1024 recipient key in the on-chain registry | tx `25C75479…FB10A`, height 10780940, seal-to-address and open round trip passed |
+| Hybrid-signed transactions (secp256k1 + ML-DSA-87) | key registrations, EVM windows, KEM registration, fingerprint commitment, native AMM swap |
+| Native AMM swap on pool 2 | tx `93AC416B…19A6A`, height 10783265 |
+
+Every row is listed with hashes in [Testnet addresses and transactions](#testnet-addresses-and-transactions); the explorer links open with the explorer switched to Testnet.
 
 ![Future Post mascot](assets/logo.svg)
 
-## Run
+## Quickstart
 
-Build the browser bundle, serve the directory, then open the local URL. The proof creates fresh ephemeral keys locally and requests no wallet connection. Its only network link is the explicit Diana evidence link.
+Tested with Node 24 and npm. The browser proof creates fresh ephemeral keys locally and requests no wallet connection.
 
 ```bash
-npm install
-npm test
-npm run check
-python -m http.server 8765
+npm ci --ignore-scripts --no-audit --no-fund
+npm run check            # compile both contracts, 41 tests, browser bundle, public-repo audit
+python3 -m http.server 8765   # then open http://localhost:8765
+```
+
+Read-only checks against the live testnet (no keys, no transactions):
+
+```bash
+npm run verify:diana-v2       # V2 runtime, pqcKeyStatus of the deployer, proven vs key-less sender
+npm run verify:diana-letter   # the live letter: register/release blocks, hashes, commitment
+npm run verify:diana-kem      # the ML-KEM-1024 key in the on-chain registry
 ```
 
 A static live demo, which needs no secrets or wallet connection for the in-browser proof, is at [https://inunanba.github.io/future-post/](https://inunanba.github.io/future-post/).
+
+## Where to look
+
+| For | Read |
+|---|---|
+| Post-quantum design and the tests that cover it | [docs/AUDIT.md](docs/AUDIT.md) |
+| Why the key is split and what the contract does and does not prove | [SECURITY_DESIGN.md](SECURITY_DESIGN.md) |
+| How AI was used and what the human decided | [AI_USAGE.md](AI_USAGE.md) |
+| Submission text, demo video script and storyboard | [docs/SUBMISSION_DRAFT.md](docs/SUBMISSION_DRAFT.md), [docs/VIDEO_SCRIPT_JA_EN.md](docs/VIDEO_SCRIPT_JA_EN.md), [docs/VIDEO_STORYBOARD.md](docs/VIDEO_STORYBOARD.md) |
+| Machine-readable chain evidence | [evidence/diana-live-letter.json](evidence/diana-live-letter.json), [evidence/diana-contract-v2-deploy.json](evidence/diana-contract-v2-deploy.json), [evidence/diana-testnet-activity.json](evidence/diana-testnet-activity.json) |
 
 ## Verify on QoreChain testnet
 
@@ -101,6 +133,8 @@ Re-check it read-only (no transaction, no keys): `npm run verify:diana-letter`. 
 - Self-made mascot/logo plus 1200×675 SVG, PNG, and WebP cover assets.
 - Unit tests for early refusal, boundary opening, binding, address rejection, countdown formatting, and official QoreSeal intended-recipient/outsider behavior.
 - Reader-first browser proof for a private first-day welcome, with the live Diana fingerprint transaction linked separately.
+- Two release contracts deployed on Diana, and a demo letter registered and released on the second one with a read-only verifier (`npm run verify:diana-letter`).
+- Native AMM swap on pool 2 from the same hybrid-signed testnet account.
 
 ## Requirements and evidence
 
@@ -112,8 +146,8 @@ Future Post is a first-day welcome letter for a new colleague: it is sealed to t
 | Reviewed recipient key | Local QoreSeal key plus public SHA-256 fingerprint | Local browser seal/open passes; Diana fingerprint anchor code 0 at height 10719012 |
 | ML-DSA binding | QoreX builds, hybrid-signs, and broadcasts the reviewed fingerprint commitment and later release messages | QoreX hybrid-signed fingerprint commitment and transfers read back on Diana; a full register-and-release run with hybrid-signed EVM-window transactions is recorded on `FuturePostReleaseV2` (see "Live letter on Diana") |
 | Client-side encryption/decryption | QoreSeal runs in the browser; plaintext and secret keys never go to an app server | Official local browser proof implemented; the live Diana letter was sealed with QoreSeal to an on-chain registered ML-KEM-1024 key and opened after release (single account); two-device integration is the next step |
-| Date lock | Sender device retains B; contract rejects publication before `unlockAt`; recipient combines QoreSeal-opened A with public B | B protocol selected; local round trip tested; `FuturePostRelease` deployed on Diana (see above) |
-| Testnet proof | Local seal/open + Diana fingerprint commitment + contract deployment + receipt readback | Local matching-recipient open and outsider refusal pass; fingerprint tx code 0, height 10719012; contract deployed at block 10780460 |
+| Date lock | Sender device retains B; contract rejects publication before `unlockAt`; recipient combines QoreSeal-opened A with public B | Local round trip tested; live letter registered, held and released after its opening time on Diana ([Live letter on Diana](#live-letter-on-diana)) |
+| Testnet proof | Local seal/open + Diana fingerprint commitment + contract deployments + register/release receipts | Matching-recipient open and outsider refusal pass; fingerprint tx code 0, height 10719012; contracts deployed at blocks 10780460 and 10782517; letter registered at 10782943 and released at 10783071 |
 | Licence | MIT | Included |
 | Cover | Self-made 1200×675 SVG source | PNG 68,191 bytes and WebP 23,154 bytes; dimensions verified |
 | AI disclosure | `AI_USAGE.md` | Included |
@@ -166,15 +200,15 @@ Read any Cosmos transaction at `https://api-testnet.qore.host/cosmos/tx/v1beta1/
 
 1. The browser creates a random AES-256 content key and encrypts the letter with AES-GCM.
 2. It creates random share A and computes share B as `contentKey XOR shareA`.
-3. Share A is sealed to the intended recipient with official QoreSeal. Share B stays only on the sender device. The current local proof uses ephemeral recipient keys and does not claim a Diana registry entry.
-4. At or after `unlockAt`, the sender asks QoreX to hybrid-sign and broadcast a release transaction containing B. The contract refuses an earlier release.
+3. Share A is sealed to the intended recipient with official QoreSeal. Share B stays only on the sender device. The in-browser proof uses ephemeral recipient keys; the live Diana letter was sealed to the ML-KEM-1024 key registered on chain for its recipient account.
+4. At or after `unlockAt`, the sender broadcasts a release transaction containing B (the app's wallet path is QoreX; the live letter used the official CLI to open a bounded EVM window and viem to send the EVM transactions). The contract refuses an earlier release.
 5. The recipient opens A with their QoreSeal keys and combines A with the public B. An outsider who sees B still lacks A.
 
-The contract records policy and timing. It does not create cryptographic time by itself. A letter to another person demonstrates the intended recipient property. A letter to oneself is a personal commitment because the same person may be able to recover both local shares.
+The contract records policy and timing. It does not create cryptographic time by itself. A letter to another person demonstrates the intended recipient property. A letter to oneself is a personal commitment because the same person may be able to recover both local shares; the live demo letter on Diana was addressed to the single-purpose testnet account itself.
 
 ## Release contract
 
-`contracts/FuturePostRelease.sol` records the sender, hashed recipient binding, opening time, ciphertext hash, and B commitment. Only the sender can publish a 32-byte B after the opening time; an early call, wrong sender, duplicate release, or commitment mismatch reverts. The contract compiled with Solidity 0.8.30 and is deployed on Diana (see above). `contracts/FuturePostReleaseV2.sol` adds the `pqcKeyStatus` sender rule described in the V2 section.
+`contracts/FuturePostRelease.sol` records the sender, hashed recipient binding, opening time, ciphertext hash, and B commitment. Only the sender can publish a 32-byte B after the opening time; an early call, wrong sender, duplicate release, or commitment mismatch reverts. The contract compiles with Solidity 0.8.30 and is deployed on Diana (see above). `contracts/FuturePostReleaseV2.sol` adds the `pqcKeyStatus` sender rule described in the V2 section.
 
 ## QoreSeal integration boundary
 
@@ -213,21 +247,9 @@ Never log a seed, mnemonic, secret key, plaintext letter, or wallet token. Testn
 - https://docs.qorechain.io/build-before-qday/workshop-3/
 - https://github.com/qorechain/qoreseal
 
-QoreSeal 0.1.0 is pre-1.0 and its construction is pending external review, so API and security claims must be rechecked before submission.
+QoreSeal 0.1.0 is a pre-1.0 package whose construction is pending external review by its authors; Future Post pins this exact version and cites its behaviour only as tested here.
 
-## 2026-11-25 live-build checkpoint
-
-Category proposal: **Quantum Pass**, one category for this project. See [build strategy](BUILD_PLAN_2026-11-25.md). A website-originated KEM-registration call was rejected by QoreX before signature and was not retried. Local ML-KEM seal/open passes in the browser. The normal-transfer public-key fingerprint anchor passed independent REST/RPC readback: code 0 at height 10719012. Separately, a single-purpose testnet account published an ML-KEM-1024 key (tx `25C75479…FB10A`, height 10780940) and `FuturePostRelease` is deployed at `0x0E5e1b9d41bFCe8a19f5dA4E55Dd6459F69E2b50` (block 10780460). This checkpoint does not claim qualification or payout.
-
-| Quantum Pass requirement | Artifact / verification | Current state |
-|---|---|---|
-| Official scaffolder | create-qorechain-dapp 0.14.0 / evm-solidity / testnet; scaffold-provenance.json and quantum-pass/ | Generated and adapted locally, credited |
-| QoreX connection | hybrid-proof.html / src/qorex-session.js | One reviewed Diana fingerprint transaction signed once and read back; a letter register/release on the deployed contract is the next connection step |
-| Testnet deployment | artifacts/FuturePostRelease.json and unsigned planner | Deployed on Diana at `0x0E5e1b9d41bFCe8a19f5dA4E55Dd6459F69E2b50`, tx `0x97090531…3281d`, block 10780460 |
-| Hybrid transaction | wallet receipt classification and independent chain-readback runbook | PASS for fingerprint commitment: code 0, height 10719012, hybrid verify events; EVM receipt is not hybrid proof |
-| Regional / Top-Quality | Official prize rules | Conditional alternatives for otherwise unawarded projects, no guarantee |
-
-### Reproduce the current checkpoint
+## Reproduce and test
 
 ```sh
 npm ci --ignore-scripts --no-audit --no-fund
@@ -236,26 +258,24 @@ npm run check
 
 The test command compiles both contracts with pinned solc 0.8.30 before testing. Forty-one test cases pass, including the official QoreSeal browser-proof core, an in-memory EVM deployment/registration/release path, negative calls, and the V2 `pqcKeyStatus` rule exercised on the unchanged production artifact. Ganache runs without a listening server; its ephemeral accounts are unrelated to Diana. Its optional native µWS module may fall back to JavaScript.
 
-See the [Native evidence runbook](NATIVE_RUNBOOK.md). `npm run prepare:diana -- reviewed-public-input.json` creates an unsigned plan only. It never connects a signer or broadcasts. `wallet-check.html` asks the installed QoreX native provider for a Diana public account only; real extension/browser behavior remains to be verified. The main screen now centers the private first-day welcome and runs the bundled official QoreSeal ML-KEM proof. The timed A/B composer remains a local prototype; registering and releasing a letter on the deployed Diana contract is the next step.
+See the [Native evidence runbook](NATIVE_RUNBOOK.md). `npm run prepare:diana -- reviewed-public-input.json` creates an unsigned plan only. It never connects a signer or broadcasts. `wallet-check.html` asks the installed QoreX native provider for a Diana public account only. The main screen centers the private first-day welcome and runs the bundled official QoreSeal ML-KEM proof in the browser. The timed A/B composer prepares a same-tab letter and an unsigned plan; the on-chain register and release run is documented in [Live letter on Diana](#live-letter-on-diana).
 
-### Public two-device handoff and receipt states
+## Browser proof
+
+`index.html` centers a private welcome letter for a new colleague's first day. `npm run build:browser` bundles official `@qorechain/qoreseal@0.1.0` into `dist/app.bundle.js`; the in-page action generates fresh ephemeral recipient and outsider keys, seals and opens locally, and displays only safe hashes and pass/refusal states. `npm run prove:mlkem` runs the same official ML-KEM-1024 seal/open check from the command line and shows `NOT_A_RECIPIENT` for an outsider, without printing plaintext or private material.
+
+The page links Diana transaction `A6633E0F8D41F77FA8414EF62C2EE3CF1943686781E60EDC36D0FF6FC90A0E27` (height 10719012, code 0), a QoreX hybrid-signed `1 uqor` self-transfer whose memo commits the reviewed recipient public-key fingerprint, and the live letter on `FuturePostReleaseV2`. `npm run prepare:hybrid-proof -- reviewed-public-kem-fingerprint.json` creates the unsigned plan for such a commitment; `hybrid-proof.html` decodes and checks the exact message before it makes one wallet request. These evidence layers are shown separately: the local proof, the fingerprint commitment, the on-chain KEM registry key, and the live letter.
+
+Evidence dated during development (command outputs and audits) is kept unedited in [evidence/history](evidence/history/README.md).
+
+## Public two-device handoff and receipt states
 
 After share A has been sealed to an intended recipient, `npm run export:bundle -- private-local-input.json` emits a public JSON handoff. The output contains the ciphertext, IV, recipient-only QoreSeal envelope, authenticated context, contract registration hashes, and a bundle digest. It deliberately omits plaintext, A, B, the content key, wallet credentials, and private keys. Changing the ciphertext, recipient, opening time, or registration values makes validation fail.
 
-`npm run prepare:registration -- reviewed-public-registration.json` validates that bundle again and produces the existing Diana-only unsigned registration plan. The plan remains `UNSIGNED_NOT_SENT`; Sena must still check the live chain, account, gas, EVM window, simulation, and receipt.
+`npm run prepare:registration -- reviewed-public-registration.json` validates that bundle again and produces the existing Diana-only unsigned registration plan. The plan remains `UNSIGNED_NOT_SENT`; The operator still checks the live chain, account, gas, EVM window, simulation, and receipt before sending.
 
 The letter view reports evidence-safe states: `PLANNED`, `WALLET_SIGNATURE_REQUESTED`, `BROADCAST_UNKNOWN`, `TX_PENDING`, `CONFIRMED_SUCCESS`, `CONFIRMED_REVERT`, `UNSUPPORTED`, or `UNKNOWN`. A wallet prompt, wallet acknowledgement, or transaction hash is never displayed as confirmed chain success.
 
-### Credits
+## Credits
 
 The implemented browser proof directly uses official @qorechain/qoreseal 0.1.0. The repository includes and credits the create-qorechain-dapp 0.14.0 scaffold (Apache-2.0 template workspace, licence included in quantum-pass/). @qorechain/qorex-types 0.1.0 is pinned as a declared dependency and is not claimed as an implemented integration. viem 2.40.0, solc 0.8.30 and Ganache 7.9.2 are used for local development/tests only. Generated Counter example is credited upstream code, not Future Post novelty. No private keys, mnemonic, password, wallet export or real-network transaction is used in these tests.
-
-
-### Checkpoint 05: honest hybrid proof boundary
-
-The product benefit is a private welcome letter waiting for a new colleague on their first day. `npm run prove:mlkem` demonstrates official ML-KEM-1024 seal/open for the intended recipient and `NOT_A_RECIPIENT` refusal for an outsider without printing plaintext or private material. `npm run prepare:hybrid-proof -- reviewed-public-kem-fingerprint.json` creates an unsigned Diana plan for one `1 uqor` Account 1 self-transfer whose memo commits the reviewed public-key fingerprint. The guarded `hybrid-proof.html` page decodes and checks that exact MsgSend before allowing one wallet request. This transaction is a fingerprint commitment, not KEM registration or decryption proof. GROKBOT-08 records the one-attempt chain result: code 0 at height 10719012, exact memo and one 1 uqor self-transfer read back, with QoreChain hybrid verification events. A website-originated KEM registration was refused once by QoreX and was not retried. An ML-KEM-1024 key was later published from a single-purpose testnet account with the official CLI, and a local seal/open against that on-chain key passed. A live two-device letter release on the deployed contract is a separate step.
-
-
-### Checkpoint 06: reader-first browser proof
-
-`index.html` now centers a private welcome letter for a new colleague's first day. `npm run build:browser` bundles official `@qorechain/qoreseal@0.1.0` into `dist/app.bundle.js`; the in-page action generates fresh ephemeral recipient and outsider keys, seals and opens locally, and displays only safe hashes and pass/refusal states. The live evidence link points to Diana transaction `A6633E0F8D41F77FA8414EF62C2EE3CF1943686781E60EDC36D0FF6FC90A0E27` (height 10719012, code 0). These are deliberately separate evidence layers.

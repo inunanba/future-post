@@ -1,6 +1,6 @@
 # Future Post demo script — revised review draft
 
-Status: GROKBOT-10 repairs applied; revised script awaits Sena ACCEPT. No recording or upload authorization.
+Status: reviewed script for the demo video (screen-only, about 1:35, within the 3-minute limit).
 Target: approximately 1:35, screen-only, English narration with optional Japanese subtitles.
 
 ## 1. Problem — 0:00–0:10

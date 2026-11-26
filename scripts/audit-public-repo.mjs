@@ -5,8 +5,8 @@ const root = new URL("../", import.meta.url).pathname;
 const required = [
   "README.md", "LICENSE", "AI_USAGE.md", "package.json", "package-lock.json",
   "index.html", "dist/app.bundle.js", "assets/logo.svg", "assets/cover-source.svg",
-  "assets/cover.png", "assets/cover.webp", "SUBMISSION_DRAFT.md", "VIDEO_STORYBOARD.md",
-  "VIDEO_SCRIPT_JA_EN.md", "VIDEO_FACT_CHECK.md"
+  "assets/cover.png", "assets/cover.webp", "docs/SUBMISSION_DRAFT.md", "docs/VIDEO_STORYBOARD.md",
+  "docs/VIDEO_SCRIPT_JA_EN.md", "docs/VIDEO_FACT_CHECK.md"
 ];
 const textExtensions = new Set([".css", ".gitignore", ".html", ".js", ".json", ".md", ".mjs", ".sol", ".svg", ".txt"]);
 const secretRules = [
@@ -67,7 +67,7 @@ for (const [index, file] of files.entries()) {
   if (!internalMarkerSkip.has(path) && !path.startsWith("dist/")) {
     for (const [name, pattern] of internalMarkerRules) if (pattern.test(text)) failures.push(`internal marker (${name}): ${path}`);
   }
-  if (["README.md", "SUBMISSION_DRAFT.md", "VIDEO_STORYBOARD.md", "AI_USAGE.md"].includes(path)) {
+  if (["README.md", "docs/SUBMISSION_DRAFT.md", "docs/VIDEO_STORYBOARD.md", "AI_USAGE.md"].includes(path)) {
     for (const phrase of forbiddenPublicClaims) if (text.includes(phrase)) failures.push(`stale public claim in ${path}: ${phrase}`);
   }
 }
@@ -125,7 +125,7 @@ for (const phrase of ['searchParams.get("shot")', '"shot-mode"']) {
   if (!appBundle.includes(phrase)) failures.push(`committed browser bundle missing shot-mode guard: ${phrase}`);
 }
 
-const videoScript = await readFile(join(root, "VIDEO_SCRIPT_JA_EN.md"), "utf8");
+const videoScript = await readFile(join(root, "docs/VIDEO_SCRIPT_JA_EN.md"), "utf8");
 for (const phrase of [
   "That’s why we made Future Post.",
   "QoreChain’s post-quantum tool",
@@ -136,7 +136,7 @@ for (const phrase of [
   if (!videoScript.includes(phrase)) failures.push(`missing reviewed video line: ${phrase}`);
 }
 
-const storyboard = await readFile(join(root, "VIDEO_STORYBOARD.md"), "utf8");
+const storyboard = await readFile(join(root, "docs/VIDEO_STORYBOARD.md"), "utf8");
 for (const phrase of [
   "Capture the proof card only after",
   "qor1rgsq0sgpww6yevnmedlqe797tc4v57u4as0w52",

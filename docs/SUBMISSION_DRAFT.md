@@ -1,6 +1,6 @@
 # Build Before Q-Day submission draft
 
-Status: internal draft aligned with the public README as of 2026-11-26. The official form pack lives in the team's internal notes. Do not press Submit until the owner has approved the saved form and the YouTube URL.
+Status: text prepared for the contest form, aligned with the public README as of 2026-11-26.
 
 ## Project name
 
@@ -20,7 +20,7 @@ Some words belong to a particular day: a birthday, a promise, or a note for some
 
 Future Post turns that moment into a simple postal experience. The sender writes a letter, chooses an intended QoreChain recipient and an opening time, and seals it locally. The recipient sees a waiting letter, but opening needs two pieces: share A, encrypted to their reviewed recipient key with QoreSeal, and share B, kept by the sender until the opening time.
 
-After the date, the sender releases B in a QoreX hybrid-signed Diana transaction. The release contract rejects an earlier call and records the timing for audit. B is intentionally public after release; an observer still cannot read the letter because only the intended recipient can recover A.
+After the date, the sender releases B in a Diana transaction (the EVM lane is opened with a hybrid-signed window). The release contract rejects an earlier call and records the timing for audit. B is intentionally public after release; an observer still cannot read the letter because only the intended recipient can recover A.
 
 The main demo uses separate sender and recipient accounts. A letter to your future self is offered as a personal commitment, not as a claim that a technically capable person who controls both local shares cannot open it early.
 
@@ -30,7 +30,7 @@ The browser creates a random AES-256 content key and encrypts the letter with AE
 
 Share A is sealed with official `@qorechain/qoreseal@0.1.0`. The current evidence is a real local ML-KEM-1024 seal/open with matching-recipient success and outsider refusal. A QoreX-originated website attempt to register a KEM key was refused by the wallet (one attempt, no retry). Separately, a single-purpose testnet account later published an ML-KEM-1024 key with the official CLI (`MsgRegisterKEMKey`, tx `25C75479…FB10A`, height 10780940), and a local seal-to-address and open round trip against that on-chain key passed. A QoreX hybrid-signed self-transfer also committed a reviewed public-key fingerprint (tx `A6633E0F…0A0E27`, height 10719012). Chain id, letter id, recipient, and opening time are authenticated as envelope context.
 
-`FuturePostRelease.sol` records the sender, recipient binding, opening time, ciphertext hash, and B commitment. Only the sender may release a matching 32-byte B after the opening time. QoreX is the transaction boundary: the dApp does not read a mnemonic, seed, or private key.
+`FuturePostRelease.sol` records the sender, recipient binding, opening time, ciphertext hash, and B commitment. Only the sender may release a matching 32-byte B after the opening time. The dApp never reads a mnemonic, seed, or private key; transactions are signed by the wallet or the official CLI.
 
 Decryption stays client-side. The recipient opens A with QoreSeal, obtains public B from the release event, reconstructs the AES key, and decrypts the authenticated ciphertext.
 
@@ -43,7 +43,7 @@ Decryption stays client-side. The recipient opens A with QoreSeal, obtains publi
 
 The idea of a time-locked letter is not claimed as new.
 
-## Evidence fields — complete only after live proof
+## Evidence fields
 
 - Public repository: https://github.com/inunanba/future-post
 - Public demo: https://inunanba.github.io/future-post/
@@ -59,14 +59,14 @@ The idea of a time-locked letter is not claimed as new.
 - Correct-recipient open evidence: local official-QoreSeal ML-KEM proof PASS, including a local seal-to-address and open against the on-chain registered key
 - Outsider refusal: local official-QoreSeal proof PASS (`NOT_A_RECIPIENT`), including the on-chain-key round trip
 - Exact package: `@qorechain/qoreseal@0.1.0`
-- Local tests: 38/38 PASS at CHECKPOINT-06; browser bundle build PASS
+- Local tests: 41/41 PASS (`npm run check`); browser bundle build PASS
 - Solidity compile: 0.8.30 PASS; deployed runtime on Diana matches `artifacts/FuturePostRelease.json` (1,560 bytes)
 - V2 deployed runtime on Diana matches `artifacts/FuturePostReleaseV2.json` (2,271 bytes, contains `0x…0a02`); read-only `npm run verify:diana-v2` PASS (proven deployer passes, key-less address gets `SenderKeyNotProven`)
-- Demo video URL: UNKNOWN
+- Demo video URL: to be added by the owner after upload
 
 ## Security limits
 
-QoreSeal protects payload content, not addresses, timing, envelope size, or recipient count. The release contract enforces a policy and creates an audit record; it does not create cryptographic time. Key loss can make a letter unreadable. The contract and application have not been externally audited.
+QoreSeal protects payload content, not addresses, timing, envelope size, or recipient count. The release contract enforces a policy and creates an audit record; it does not create cryptographic time. Key loss can make a letter unreadable. Review so far is by the team and AI reviewers; no external audit is claimed.
 
 Never include a mnemonic, seed, private key, wallet token, plaintext private letter, or test secret in submission materials.
 
