@@ -1,13 +1,12 @@
 # Public repository readiness audit
 
 Audit date: 2026-11-25 JST  
-Source commit: `1d3277a2359a625cdd140932b60e1329b69e7ce2`  
-Scope: `projects/qorechain/future-post/`  
+Scope: Future Post project tree  
 Status: **PUBLIC REPOSITORY PUBLISHED**
 
 ## Judge path
 
-- Intended repository source: this public repository, copied from `projects/qorechain/future-post/` in private `inunanba/test-mon` with a fresh history.
+- Intended repository source: this public repository, published from the reviewed project tree with a fresh history.
 - Current GitHub visibility: **public** at [https://github.com/inunanba/future-post](https://github.com/inunanba/future-post).
 - Public repository URL: [https://github.com/inunanba/future-post](https://github.com/inunanba/future-post).
 - Public demo URL: [https://inunanba.github.io/future-post/](https://inunanba.github.io/future-post/) (static GitHub Pages; no secrets required for the in-browser proof).

@@ -1,7 +1,5 @@
 # Future Post — Diana Native hybrid evidence runbook
 
-request_id: `R-20261125-grokbot-work-qorechain-build-01`
-
 This route follows the one-attempt QoreX rejection of `/qorechain.pqc.v1.MsgRegisterKEMKey`. That message is wallet-managed and must not be retried or routed around. Future Post now keeps two evidence layers separate: official QoreSeal local ML-KEM seal/open proves recipient encryption, while a normal QoreX hybrid `MsgSend` may commit the reviewed public-key fingerprint on Diana. The transfer does not register a KEM key and does not prove decryption.
 
 ## Evidence boundary

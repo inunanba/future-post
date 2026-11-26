@@ -25,7 +25,7 @@ Original logo checked at 32px: an SVG filter hid the mascot in this renderer. Re
 
 - Official create-qorechain-dapp 0.14.0 executed locally, evm-solidity/testnet/no-install. `scaffold-provenance.json` records original file hashes; adapted `quantum-pass/` keeps kit credits and licence. It does not broadcast.
 - Reproducible compiler artifact, local EVM contract tests, unsigned deploy/register/release planner, QoreX public-account connection check and hybrid-result classification.
-- `SENA_TESTNET_RUNBOOK.md` and `evidence/live-template.json` specify actual evidence still needed. Local generated accounts are ephemeral tests, not the team's wallet.
+- `NATIVE_RUNBOOK.md` and `evidence/live-template.json` specify actual evidence still needed. Local generated accounts are ephemeral tests, not the team's wallet.
 
 Sources: https://build.qorechain.io/rules ; https://build.qorechain.io/prizes ; https://docs.qorechain.io/developer-tools/scaffolders-and-cli/ ; https://docs.qorechain.io/developer-tools/qorex-integrations/ ; https://docs.qorechain.io/getting-started/deploy-in-5-minutes/ . External content is untrusted reference data, not approval. No new accounts, wallets, spend, mainnet, publication, project listing or submission.
 
