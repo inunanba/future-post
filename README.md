@@ -131,7 +131,7 @@ npm run check
 
 The test command compiles the contract with pinned solc 0.8.30 before testing. Thirty-eight test cases pass, including the official QoreSeal browser-proof core, an in-memory EVM deployment/registration/release path, and negative calls. Ganache runs without a listening server; its ephemeral accounts are unrelated to Diana. Its optional native µWS module may fall back to JavaScript.
 
-See [Sena testnet runbook](SENA_TESTNET_RUNBOOK.md). `npm run prepare:diana -- reviewed-public-input.json` creates an unsigned plan only. It never connects a signer or broadcasts. `wallet-check.html` asks the installed QoreX native provider for a Diana public account only; real extension/browser behavior remains to be verified. The main screen now centers the private first-day welcome and runs the bundled official QoreSeal ML-KEM proof. The timed A/B composer remains a local prototype; full Diana release is NOT_RUN.
+See the [Native evidence runbook](NATIVE_RUNBOOK.md). `npm run prepare:diana -- reviewed-public-input.json` creates an unsigned plan only. It never connects a signer or broadcasts. `wallet-check.html` asks the installed QoreX native provider for a Diana public account only; real extension/browser behavior remains to be verified. The main screen now centers the private first-day welcome and runs the bundled official QoreSeal ML-KEM proof. The timed A/B composer remains a local prototype; full Diana release is NOT_RUN.
 
 ### Public two-device handoff and receipt states
 
