@@ -24,7 +24,8 @@
     {"hash": "CC79F0EB9B61B25B448C8DF8EFDCA83974B758AFCCFEAA77E9F63255EE05392F", "height": 10782933, "from": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq", "what": "MsgOpenEVMWindow (300 blocks, 2 transactions, 0.2 QOR bound), PQCHybridSignature"},
     {"hash": "0xe7d5a114fe884bb605bd8b89fe5627d00a9e12f35b6a148adae53ceec4fb2469", "height": 10782943, "from": "0x768310cBCD782BDa4fd3cf5Bbb96b6E291E3F103", "what": "registerLetter on FuturePostReleaseV2 (demo letter)"},
     {"hash": "0x575d7e8a35aa97218ade2c3b0b670203f62fd30c3a44a72571fee8fe9490e09c", "height": 10783071, "from": "0x768310cBCD782BDa4fd3cf5Bbb96b6E291E3F103", "what": "releaseShareB on FuturePostReleaseV2 (after the opening time)"},
-    {"hash": "631FA9B6C9EACA231177B90F3F20F1CD0D495126406919D91AF5B890515B4482", "height": 10783080, "from": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq", "what": "MsgCloseEVMWindow, PQCHybridSignature"}
+    {"hash": "631FA9B6C9EACA231177B90F3F20F1CD0D495126406919D91AF5B890515B4482", "height": 10783080, "from": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq", "what": "MsgCloseEVMWindow, PQCHybridSignature"},
+    {"hash": "93AC416B5E033C9920BFDA8C50D98F934A0525BD59D00BDE9869D85763019A6A", "height": 10783265, "from": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq", "what": "MsgSwapExactIn on AMM pool 2 (0.1 QOR in, 1030 units of erc20:0x97143B771D34ddb9130b807b135Ae675A5a963CA out), PQCHybridSignature"}
   ],
   "quantum_pass_requirements": {
     "create-qorechain-dapp": "scaffold-provenance.json (create-qorechain-dapp 0.14.0, template evm-solidity, network testnet)",

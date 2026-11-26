@@ -158,6 +158,7 @@ All on QoreChain Diana (`qorechain-diana`, EVM chain 9800). Machine-readable cop
 | `0xe7d5a114fe884bb605bd8b89fe5627d00a9e12f35b6a148adae53ceec4fb2469` | 10782943 | Deployer: `registerLetter` on `FuturePostReleaseV2` |
 | `0x575d7e8a35aa97218ade2c3b0b670203f62fd30c3a44a72571fee8fe9490e09c` | 10783071 | Deployer: `releaseShareB` on `FuturePostReleaseV2` |
 | `631FA9B6C9EACA231177B90F3F20F1CD0D495126406919D91AF5B890515B4482` | 10783080 | Deployer: EVM window closed |
+| `93AC416B5E033C9920BFDA8C50D98F934A0525BD59D00BDE9869D85763019A6A` | 10783265 | Deployer: native AMM swap on pool 2 (`MsgSwapExactIn`, 0.1 QOR in, 1,030 fUSD units out), PQCHybridSignature |
 
 Read any Cosmos transaction at `https://api-testnet.qore.host/cosmos/tx/v1beta1/txs/<HASH>`; the EVM deployment is read through the EVM RPC (see above).
 
