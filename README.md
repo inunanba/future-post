@@ -143,7 +143,7 @@ The letter view reports evidence-safe states: `PLANNED`, `WALLET_SIGNATURE_REQUE
 
 ### Credits
 
-Official @qorechain/qoreseal 0.1.0, @qorechain/qorex-types 0.1.0, create-qorechain-dapp 0.14.0 (Apache-2.0 template workspace, licence included in quantum-pass/), viem 2.40.0, solc 0.8.30 and Ganache 7.9.2 (local development/tests only). Generated Counter example is credited upstream code, not Future Post novelty. No private keys, mnemonic, password, wallet export or real-network transaction is used in these tests.
+The implemented browser proof directly uses official @qorechain/qoreseal 0.1.0. The repository includes and credits the create-qorechain-dapp 0.14.0 scaffold (Apache-2.0 template workspace, licence included in quantum-pass/). @qorechain/qorex-types 0.1.0 is pinned as a declared dependency and is not claimed as an implemented integration. viem 2.40.0, solc 0.8.30 and Ganache 7.9.2 are used for local development/tests only. Generated Counter example is credited upstream code, not Future Post novelty. No private keys, mnemonic, password, wallet export or real-network transaction is used in these tests.
 
 
 ### Checkpoint 05: honest hybrid proof boundary
