@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="t d">
+<title id="t">Future Post mascot</title><desc id="d">A smiling coral postbox holding a glowing letter</desc>
+<defs><linearGradient id="sky" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff6df"/><stop offset="1" stop-color="#dff8f2"/></linearGradient><filter id="s"><feDropShadow dx="0" dy="6" stdDeviation="5" flood-opacity=".18"/></filter></defs>
+<rect width="256" height="256" rx="56" fill="url(#sky)"/>
+<g>
+<path d="M62 112c0-42 27-70 66-70s66 28 66 70v82H62z" fill="#ef6a67" stroke="#563d46" stroke-width="8" stroke-linejoin="round"/>
+<path d="M62 112h132" stroke="#563d46" stroke-width="8"/>
+<path d="M91 77h74v42H91z" fill="#563d46" rx="8"/>
+<path d="M101 88h54v20h-54z" fill="#ffe8a3" rx="4"/>
+<circle cx="105" cy="150" r="6" fill="#563d46"/><circle cx="151" cy="150" r="6" fill="#563d46"/>
+<path d="M110 169c11 10 25 10 36 0" fill="none" stroke="#563d46" stroke-width="7" stroke-linecap="round"/>
+<path d="M84 194v30M172 194v30" stroke="#563d46" stroke-width="9" stroke-linecap="round"/>
+<path d="M51 137c-22 8-30 25-25 42 15-1 28-8 36-23M205 137c22 8 30 25 25 42-15-1-28-8-36-23" fill="#fff" stroke="#563d46" stroke-width="7" stroke-linejoin="round"/>
+<g transform="rotate(-7 128 127)"><rect x="89" y="105" width="78" height="52" rx="8" fill="#fff" stroke="#563d46" stroke-width="7"/><path d="m94 111 34 25 34-25" fill="none" stroke="#f2b94b" stroke-width="7" stroke-linejoin="round"/></g>
+<circle cx="193" cy="57" r="9" fill="#f2b94b"/><path d="M193 35v-9M193 88v-9M171 57h-9M224 57h-9" stroke="#f2b94b" stroke-width="6" stroke-linecap="round"/>
+</g></svg>

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Future Post — register recipient KEM</title>
+<style>body{font-family:system-ui,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;color:#172033;background:#fffafc}main{background:white;border:1px solid #eadde4;border-radius:20px;padding:24px;box-shadow:0 12px 36px #612b4a12}h1{font-size:1.55rem}label{display:block;margin:18px 0 8px;font-weight:700}button{padding:12px 18px;border:0;border-radius:12px;background:#802858;color:white;font-weight:800}button:disabled{background:#aaa}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f7f3f5;padding:14px;border-radius:12px}aside{border-left:4px solid #b8507d;padding:8px 14px;background:#fff3f8}.bad{color:#9b1c31}.good{color:#17643a}</style></head>
+<body><main><h1>Register the recipient’s public ML-KEM key</h1>
+<aside>This page accepts a reviewed public <code>UNSIGNED_NOT_SENT</code> plan. It never reads a seed, mnemonic, private key, share, password or plaintext. It makes at most one QoreX broadcast attempt per loaded plan and never retries.</aside>
+<label for="plan">1. Load reviewed public plan JSON</label><input id="plan" type="file" accept="application/json,.json">
+<pre id="review">No plan loaded. Nothing can be signed.</pre>
+<label><input id="confirm" type="checkbox" disabled> I verified Diana, coin-118, one MsgRegisterKEMKey message, memo, gas and public-key fingerprint.</label>
+<p><button id="register" disabled>Connect QoreX and register once</button></p>
+<pre id="result">NOT_REQUESTED</pre></main>
+<script type="module">
+import {KEM_CHAIN_ID,KEM_SIGNER,KEM_TYPE_URL,KEM_MEMO,KEM_GAS_LIMIT,validateKemRegistrationPlan,executeKemRegistration,publicKeyFingerprint} from './src/kem-register.js';
+const file=document.querySelector('#plan'),review=document.querySelector('#review'),confirm=document.querySelector('#confirm'),button=document.querySelector('#register'),result=document.querySelector('#result');
+let plan=null,attempted=false;
+function show(el,value,klass=''){el.className=klass;el.textContent=typeof value==='string'?value:JSON.stringify(value,null,2)}
+file.addEventListener('change',async()=>{plan=null;attempted=false;confirm.checked=false;confirm.disabled=true;button.disabled=true;show(result,'NOT_REQUESTED');try{const parsed=JSON.parse(await file.files[0].text());const checked=validateKemRegistrationPlan(parsed);const fingerprint=await publicKeyFingerprint(checked.publicKey);plan=parsed;show(review,{chainId:KEM_CHAIN_ID,signer:KEM_SIGNER,messageType:KEM_TYPE_URL,messageCount:1,memo:KEM_MEMO,gasLimit:KEM_GAS_LIMIT,algorithm:'ML-KEM-1024',publicKeyBytes:checked.publicKey.length,publicKeySha256:fingerprint,status:parsed.status},'good');confirm.disabled=false;}catch(error){show(review,`REJECTED_PLAN: ${error.message}`,'bad')}});
+confirm.addEventListener('change',()=>{button.disabled=!confirm.checked||!plan||attempted});
+button.addEventListener('click',async()=>{if(!plan||attempted)return;attempted=true;button.disabled=true;file.disabled=true;confirm.disabled=true;sessionStorage.setItem('future-post-kem-attempted','true');try{const {result:r}=await executeKemRegistration({native:window.qorex?.native,plan,onState:s=>show(result,s)});const ok=r?.code===0&&Number.isSafeInteger(r?.height)&&r.height>0&&/^(0x)?[a-fA-F0-9]{64}$/.test(r?.txHash??'');show(result,{status:ok?'WALLET_REPORTED_SUCCESS_NEEDS_CHAIN_READBACK':'FAILED_OR_UNVERIFIED_NO_RETRY',txHash:r?.txHash??null,code:r?.code??null,height:r?.height??null,shield:r?.shield??null},ok?'good':'bad');}catch(error){show(result,{status:'REJECTED_OR_FAILED_NO_RETRY',error:error.message},'bad')}});
+if(sessionStorage.getItem('future-post-kem-attempted')==='true'){attempted=true;file.disabled=true;show(review,'A registration attempt already occurred in this tab session. Close this tab and inspect receipt/registry evidence; do not retry.','bad')}
+</script></body></html>

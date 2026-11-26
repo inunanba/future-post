@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="t d">
+<title id="t">Future Post cover</title><desc id="d">A coral postbox sends a glowing letter toward a future date</desc>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff7e5"/><stop offset=".6" stop-color="#e1f8f2"/><stop offset="1" stop-color="#c8e8ff"/></linearGradient><filter id="sh"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-opacity=".16"/></filter></defs>
+<rect width="1200" height="675" fill="url(#bg)"/><circle cx="1040" cy="120" r="78" fill="#f7c95e" opacity=".72"/>
+<path d="M0 570c210-70 390 48 610-18s380-82 590-4v127H0z" fill="#99d8c9"/>
+<g transform="translate(120 124) scale(1.55)" filter="url(#sh)">
+<path d="M62 112c0-42 27-70 66-70s66 28 66 70v82H62z" fill="#ef6a67" stroke="#563d46" stroke-width="8" stroke-linejoin="round"/>
+<path d="M62 112h132M84 194v30M172 194v30" stroke="#563d46" stroke-width="8"/>
+<circle cx="105" cy="150" r="6" fill="#563d46"/><circle cx="151" cy="150" r="6" fill="#563d46"/><path d="M110 169c11 10 25 10 36 0" fill="none" stroke="#563d46" stroke-width="7" stroke-linecap="round"/>
+<rect x="89" y="91" width="78" height="52" rx="8" fill="#fff" stroke="#563d46" stroke-width="7"/><path d="m94 98 34 25 34-25" fill="none" stroke="#f2b94b" stroke-width="7"/>
+</g>
+<text x="500" y="270" font-family="ui-rounded,system-ui,sans-serif" font-size="84" font-weight="800" fill="#563d46">Future Post</text>
+<text x="505" y="342" font-family="system-ui,sans-serif" font-size="34" fill="#6b5960">A sealed letter for the day you choose.</text>
+<g transform="translate(510 390)"><rect width="480" height="82" rx="41" fill="#fff" opacity=".86"/><circle cx="48" cy="41" r="18" fill="#f2b94b"/><text x="84" y="52" font-family="system-ui,sans-serif" font-size="30" font-weight="650" fill="#563d46">Private until opening day</text></g>
+</svg>

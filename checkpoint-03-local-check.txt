@@ -1,0 +1,33 @@
+request_id=R-20261125-grokbot-work-qorechain-build-01
+checkpoint=03-native-replan
+verification_time_jst=2026-11-25 14:09:04 JST
+network=qorechain-diana
+signing=0
+broadcast=0
+spend=0
+
+npm_run_check=PASS
+tests=28
+passed=28
+failed=0
+
+cli_prepare_native_kem=PASS
+kem_kind=REGISTER_RECIPIENT_KEM
+kem_signer=qor1rgsq0sgpww6yevnmedlqe797tc4v57u4as0w52
+kem_messages=1
+kem_status=UNSIGNED_NOT_SENT
+
+cli_prepare_native_anchor_prepare=PASS
+prepare_signer=qor1r274urptm66u0kn6eujalcl0v7sz5tj0tus05t
+prepare_messages=1
+prepare_memo_bytes=156
+prepare_status=UNSIGNED_NOT_SENT
+
+cli_prepare_native_anchor_release=PASS
+release_signer=qor1r274urptm66u0kn6eujalcl0v7sz5tj0tus05t
+release_messages=1
+release_memo_bytes=131
+release_status=UNSIGNED_NOT_SENT
+
+guards=exact_diana_chain,exact_active_signer,signAndBroadcast_capability,one_reviewed_call,recursive_secret_field_rejection,release_chain_time_at_or_after_unlock,share_b_commitment_match,memo_and_gas_limits
+known_limit=Native anchors are auditable evidence and do not contract-enforce release time. EVM live deploy remains BLOCKED_CAPABILITY because the existing box has no same-account EVM signer.

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Future Post — private first-day welcome</title>
+  <link rel="icon" href="./assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./src/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <img src="./assets/logo.svg" width="48" height="48" alt="">
+    <div><strong>Future Post</strong><span>Private letters for a day you choose</span></div>
+    <span class="prototype">PRODUCT PROTOTYPE</span>
+  </header>
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">A private welcome letter for a new colleague’s first day</p>
+        <h1>Make day one feel<br>like they already belong.</h1>
+        <p class="lede">Seal a welcome today so only the intended colleague can open it. The working proof below uses official QoreSeal ML-KEM-1024 entirely in this browser.</p>
+        <button id="run-mlkem-proof" class="primary">Run the private welcome proof</button>
+      </div>
+      <img class="mascot" src="./assets/logo.svg" alt="A smiling coral postbox holding a letter">
+    </section>
+
+    <section class="card proof-card" aria-labelledby="proof-title">
+      <div class="step">✓</div>
+      <div>
+        <p class="eyebrow">Working privacy proof</p>
+        <h2 id="proof-title">One welcome. One intended reader.</h2>
+        <p>The browser creates fresh ephemeral keys, seals the first-day welcome with official QoreSeal, then tries both readers. No private key or plaintext is sent or retained.</p>
+        <div class="proof-grid">
+          <div><span>Intended colleague</span><strong id="recipient-proof">READY</strong></div>
+          <div><span>Outsider</span><strong id="outsider-proof">READY</strong></div>
+        </div>
+        <p id="mlkem-proof-status" class="notice" aria-live="polite">Run the proof to create fresh local evidence.</p>
+        <dl class="evidence-list">
+          <div><dt>Algorithm</dt><dd>Official QoreSeal ML-KEM-1024</dd></div>
+          <div><dt>Envelope SHA-256</dt><dd id="proof-envelope">Created only after a local run</dd></div>
+          <div><dt>Scope</dt><dd>In-browser intended-reader and outsider check</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="card chain-card" aria-labelledby="chain-title">
+      <div class="step">↗</div>
+      <div>
+        <p class="eyebrow">Reviewed Diana fingerprint commitment</p>
+        <h2 id="chain-title">A public fingerprint, without publishing the letter.</h2>
+        <p>A QoreChain Diana transaction committed the reviewed ML-KEM public-key fingerprint. QoreChain’s hybrid verification is confirmed with code 0 at height 10719012. This public record is shown separately from the local opening proof.</p>
+        <a class="evidence-link" href="https://api-testnet.qore.host/cosmos/tx/v1beta1/txs/A6633E0F8D41F77FA8414EF62C2EE3CF1943686781E60EDC36D0FF6FC90A0E27" target="_blank" rel="noreferrer">Read the live Diana transaction ↗</a>
+        <code>future-post:v1|kem-fp|3f6cffdb…a80c6a358</code>
+      </div>
+    </section>
+
+    <section id="composer" class="card" aria-labelledby="compose-title">
+      <div class="step">1</div>
+      <div>
+        <p class="eyebrow">Compose</p><h2 id="compose-title">Who should meet this letter?</h2>
+        <form id="letter-form">
+          <label>Recipient’s Diana address
+            <input id="recipient" required value="qor1rgsq0sgpww6yevnmedlqe797tc4v57u4as0w52" autocomplete="off">
+          </label>
+          <label>Opening date and time
+            <input id="unlock" type="datetime-local" required>
+          </label>
+          <label>Your letter
+            <textarea id="message" required maxlength="2000" placeholder="For the day you open this…"></textarea>
+          </label>
+          <button class="primary" type="submit">Prepare the seal</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="letter" class="card hidden" aria-live="polite">
+      <div class="step">2</div>
+      <div>
+        <p class="eyebrow">Prepared locally</p>
+        <h2 id="state-title">Your letter is waiting</h2>
+        <div class="envelope">
+          <span aria-hidden="true">✉</span>
+          <div><strong id="state-code">LOCKED</strong><p id="countdown"></p></div>
+        </div>
+        <dl>
+          <div><dt>Network</dt><dd>qorechain-diana</dd></div>
+          <div><dt>Purpose</dt><dd id="purpose"></dd></div>
+          <div><dt>Recipient</dt><dd id="recipient-out"></dd></div>
+          <div><dt>Ciphertext</dt><dd id="ciphertext-size"></dd></div>
+          <div class="receipt-row"><dt>Diana receipt</dt><dd id="receipt-status">PLANNED — Unsigned plan only; nothing has been sent.</dd></div>
+        </dl>
+        <button id="open" class="primary" disabled>Prepare share B release</button>
+        <blockquote id="opened-letter" hidden></blockquote>
+        <p id="notice" class="notice">This composer prepares a same-tab timed letter. The official QoreSeal proof and verified Diana fingerprint record remain visible above.</p>
+      </div>
+    </section>
+  </main>
+  <footer>Future Post · created by inunanba · official in-browser QoreSeal proof · reviewed Diana fingerprint commitment</footer>
+  <script type="module" src="./dist/app.bundle.js"></script>
+</body>
+</html>

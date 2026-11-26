@@ -1,0 +1,3 @@
+# Future Post — generated QoreChain workspace
+
+Generated with create-qorechain-dapp 0.14.0, evm-solidity, testnet. Original template hashes are in ../scaffold-provenance.json. Counter.sol is upstream Apache-2.0 example code, not our novelty. FuturePostRelease.sol is the project contract; ../contracts/ is authoritative. The original key-reading broadcast helper was removed. Use ../SENA_TESTNET_RUNBOOK.md and the unsigned planner in the parent. No deploy command is provided. Compile/test from the parent folder after npm ci. Actual QoreX connection, deployment and hybrid transaction are not yet evidenced.

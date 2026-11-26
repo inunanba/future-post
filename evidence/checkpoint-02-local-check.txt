@@ -1,0 +1,16 @@
+request_id: R-20261125-grokbot-work-qorechain-build-01
+checkpoint: 02
+when_utc: 2026-11-25 04:16 UTC
+source: GitHub main after public-bundle and receipt-state implementation
+
+npm run check: PASS
+node --test test/*.test.js: 24/24 PASS
+syntax checks: PASS
+local EVM contract lifecycle: PASS (Ganache JavaScript fallback)
+public bundle tests: 3/3 PASS
+receipt evidence-state tests: 2/2 PASS
+CLI smoke: export:bundle -> prepare:registration PASS
+CLI result: UNSIGNED_NOT_SENT register; bundle digest preserved; calldata generated
+
+No wallet connection, signing, broadcast, EVM window, new account, public deployment, submission, spend, or secret export occurred.
+Diana deploy/register/release and two-device recipient open remain NOT_RUN/UNKNOWN.

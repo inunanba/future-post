@@ -1,0 +1,21 @@
+{
+  "request_id": "R-20261125-grokbot-work-qorechain-build-01",
+  "network": "qorechain-diana",
+  "evm_chain_id": 9800,
+  "source_commit": "UNKNOWN",
+  "native_address": "UNKNOWN",
+  "coin60_evm_address": "UNKNOWN",
+  "qorex_connection": "NOT_RUN",
+  "evm_signer_capability": "UNKNOWN",
+  "contract_address": "UNKNOWN",
+  "deploy_receipt": "NOT_RUN",
+  "runtime_code_match": "NOT_RUN",
+  "register_receipt": "NOT_RUN",
+  "early_release_simulation": "NOT_RUN",
+  "release_receipt": "NOT_RUN",
+  "native_hybrid_receipt": "NOT_RUN",
+  "native_chain_readback": "NOT_RUN",
+  "registered_kem_and_mldsa_binding": "NOT_RUN",
+  "recipient_open": "NOT_RUN",
+  "outsider_refusal": "NOT_RUN"
+}

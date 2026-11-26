@@ -1,0 +1,29 @@
+request_id=R-20261125-grokbot-work-qorechain-build-01
+checkpoint=05-honest-hybrid-proof
+verification_time_jst=2026-11-25 17:xx JST
+network=qorechain-diana
+signing=0
+broadcast=0
+spend=0
+
+blocked_capability=MsgRegisterKEMKey wallet-managed; one rejected attempt; no retry
+npm_run_check=PASS
+tests=37
+passed=37
+failed=0
+local_mlkem_matching_open=true
+local_mlkem_outsider_open=false
+static_page_readback=PASS
+static_module_readback=PASS
+
+page=hybrid-proof.html
+module=src/hybrid-proof.js
+exact_signer=qor1rgsq0sgpww6yevnmedlqe797tc4v57u4as0w52
+exact_message=/cosmos.bank.v1beta1.MsgSend
+exact_transfer=1 uqor self-transfer
+exact_memo=future-post:v1|kem-fp|3f6cffdb4cd083ae855a3f5cc074eac70fa92b7c4fc8b565d95e520a80c6a358
+exact_gas=300000
+evidence_boundary=FINGERPRINT_COMMITMENT_NOT_KEM_REGISTRATION
+success_boundary=wallet_reported_code_0_hash_height_still_needs_chain_receipt_and_exact_memo_readback
+
+known_limit=No signature, transaction, receipt, or chain readback was performed by Work. The local ephemeral ML-KEM proof does not claim the reviewed public fingerprint was used for decryption.

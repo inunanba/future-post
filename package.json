@@ -1,0 +1,32 @@
+{
+  "name": "future-post",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Reader-first prototype and QoreSeal integration boundary for Future Post",
+  "type": "module",
+  "scripts": {
+    "test": "npm run compile && node --test test/*.test.js",
+    "check": "npm test && npm run build:browser && npm run audit:public && node --check src/protocol.js && node --check src/split-envelope.js && node --check src/qoreseal-adapter.js && node --check src/diana-plan.js && node --check src/qorex-session.js && node --check src/public-bundle.js && node --check src/receipt-state.js && node --check src/native-plan.js && node --check src/kem-register.js && node --check src/hybrid-proof.js && node --check src/mlkem-proof.js && node --check src/app.js && node --check scripts/export-public-bundle.mjs && node --check scripts/prepare-registration.mjs && node --check scripts/prepare-native-kem.mjs && node --check scripts/prepare-native-anchor.mjs && node --check scripts/prepare-hybrid-proof.mjs && node --check scripts/prove-local-mlkem.mjs && node --check scripts/build-browser.mjs && node --check scripts/audit-public-repo.mjs",
+    "build:browser": "node scripts/build-browser.mjs",
+    "audit:public": "node scripts/audit-public-repo.mjs",
+    "compile": "node scripts/compile.mjs",
+    "prepare:diana": "node scripts/prepare-diana.mjs",
+    "export:bundle": "node scripts/export-public-bundle.mjs",
+    "prepare:registration": "node scripts/prepare-registration.mjs",
+    "prepare:native-kem": "node scripts/prepare-native-kem.mjs",
+    "prepare:native-anchor": "node scripts/prepare-native-anchor.mjs",
+    "prepare:hybrid-proof": "node scripts/prepare-hybrid-proof.mjs",
+    "prove:mlkem": "node scripts/prove-local-mlkem.mjs"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@qorechain/qoreseal": "0.1.0",
+    "@qorechain/qorex-types": "0.1.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "ganache": "7.9.2",
+    "solc": "0.8.30",
+    "viem": "2.40.0"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "future-post-public-repo-audit/v1",
+  "filesScanned": 67,
+  "textFilesScanned": 65,
+  "requiredFiles": 13,
+  "readmeRelativeLinks": 4,
+  "coverPng": "1200x675",
+  "secretPatternHits": 0,
+  "status": "PASS",
+  "failures": []
+}

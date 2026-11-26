@@ -1,0 +1,52 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> future-post@0.1.0 check
+> npm test && node --check src/protocol.js && node --check src/split-envelope.js && node --check src/qoreseal-adapter.js && node --check src/app.js
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> future-post@0.1.0 test
+> npm run compile && node --test test/*.test.js
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> future-post@0.1.0 compile
+> node scripts/compile.mjs
+
+Compiled FuturePostRelease; no deployment or network call
+This version of µWS is not compatible with your Node.js build:
+
+Error: Cannot find module '../binaries/uws_linux_x64_137.node'
+Require stack:
+- /workspace/scratch/96cf6ce4fa5d/qorechain59/node_modules/ganache/node_modules/@trufflesuite/uws-js-unofficial/src/uws.js
+- /workspace/scratch/96cf6ce4fa5d/qorechain59/node_modules/ganache/dist/node/core.js
+Falling back to a NodeJS implementation; performance may be degraded.
+
+
+✔ actual local EVM: sender/date/commitment/duplicate guards and immutable metadata (325.848068ms)
+✔ prepares a zero-value unsigned registration without any provider (3.858987ms)
+✔ rejects mainnet, wrong RPC, zero address, non-finite time, and early date (0.509343ms)
+✔ release binds B commitment and time; no silent early call (0.913908ms)
+✔ deployment carries only compiled bytecode and zero value (0.244055ms)
+✔ refuses an early opening request (2.755626ms)
+✔ allows an opening request at the boundary (0.317295ms)
+✔ binds chain, letter, date, and registered recipient context (0.992787ms)
+✔ rejects a non-QoreChain recipient (0.369012ms)
+✔ formats the countdown without negative values (0.319338ms)
+✔ official QoreSeal opens share A only for the matching recipient (55.064744ms)
+✔ connect requires native provider, selects only Diana, never calls signer (3.325699ms)
+✔ wallet success, EVM success, pending and classical are not hybrid on-chain proof (0.495883ms)
+✔ splits and recombines a 256-bit content key (2.636577ms)
+✔ XOR needs both equal-length shares (0.744465ms)
+✔ encrypts and decrypts only with matching A and B (13.317016ms)
+✔ authenticated context cannot be changed (0.9613ms)
+✔ refuses to build a public B release before unlock (0.339909ms)
+✔ builds a public B release at unlock without plaintext or share A (0.867138ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 725.897889

@@ -1,0 +1,17 @@
+{
+  "tool": "create-qorechain-dapp",
+  "version": "0.14.0",
+  "template": "evm-solidity",
+  "network": "testnet",
+  "ran_on": "2026-11-25",
+  "install": false,
+  "files_before_adaptation": {
+    "tsconfig.json": "7f1549f5526d882ac37e07fa2c763a9773e9f9dc0841416a493c7a2fdcf393d9",
+    ".env.example": "192fc8ec0e731e76037e923b4ba6a268bd23a0aa2d63c58a20b56b84d5950f1c",
+    "README.md": "1543f8241cacc72f4c541e22a25c50c9198d815247bab20d4447c7edc736812d",
+    "package.json": "74319c84de2355376221873c53561cd1342b2d53bc9c5b46587fc70f7e9efcc4",
+    "scripts/deploy.ts": "194c857bb7575e25b0a8b79af9cbb2a60f69fa554213df52b6ed36772ea19131",
+    "contracts/Counter.artifact.ts": "e54492873d162bd47888f4680b9cf439a0d73a06ecb344414d70cd9ef316b6f4",
+    "contracts/Counter.sol": "3c47c49ee70a2dccbe9133fa920a9dba4c3b72d1046ead888488c37cba093a59"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "future-post-quantum-pass-kit",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "compile": "cd .. && npm run compile",
+    "test": "cd .. && npm test",
+    "prepare:diana": "cd .. && npm run prepare:diana --"
+  }
+}

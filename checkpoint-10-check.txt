@@ -1,0 +1,92 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> future-post@0.1.0 check
+> npm test && npm run build:browser && npm run audit:public && node --check src/protocol.js && node --check src/split-envelope.js && node --check src/qoreseal-adapter.js && node --check src/diana-plan.js && node --check src/qorex-session.js && node --check src/public-bundle.js && node --check src/receipt-state.js && node --check src/native-plan.js && node --check src/kem-register.js && node --check src/hybrid-proof.js && node --check src/mlkem-proof.js && node --check src/app.js && node --check scripts/export-public-bundle.mjs && node --check scripts/prepare-registration.mjs && node --check scripts/prepare-native-kem.mjs && node --check scripts/prepare-native-anchor.mjs && node --check scripts/prepare-hybrid-proof.mjs && node --check scripts/prove-local-mlkem.mjs && node --check scripts/build-browser.mjs && node --check scripts/audit-public-repo.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> future-post@0.1.0 test
+> npm run compile && node --test test/*.test.js
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> future-post@0.1.0 compile
+> node scripts/compile.mjs
+
+Compiled FuturePostRelease; no deployment or network call
+This version of µWS is not compatible with your Node.js build:
+
+Error: Cannot find module '../binaries/uws_linux_x64_137.node'
+Require stack:
+- /workspace/scratch/c29a0dc47fd8/qorecp/node_modules/ganache/node_modules/@trufflesuite/uws-js-unofficial/src/uws.js
+- /workspace/scratch/c29a0dc47fd8/qorecp/node_modules/ganache/dist/node/core.js
+Falling back to a NodeJS implementation; performance may be degraded.
+
+
+✔ actual local EVM: sender/date/commitment/duplicate guards and immutable metadata (343.84384ms)
+✔ prepares a zero-value unsigned registration without any provider (3.943741ms)
+✔ rejects mainnet, wrong RPC, zero address, non-finite time, and early date (0.560296ms)
+✔ release binds B commitment and time; no silent early call (1.221731ms)
+✔ deployment carries only compiled bytecode and zero value (0.485966ms)
+✔ builds and decodes an exact 1 uqor self-transfer fingerprint anchor (3.910913ms)
+✔ rejects changed signer, fingerprint, gas, message or private fields (0.621786ms)
+✔ checks account and calls QoreX exactly once (0.701474ms)
+✔ never broadcasts for wrong account or missing capability (2.613942ms)
+✔ browser KEM guard decodes and binds the public plan (70.919926ms)
+✔ browser KEM guard rejects a changed signer, gas, message or nested secret (4.175062ms)
+✔ browser KEM executor checks account and calls signAndBroadcast exactly once (4.771972ms)
+✔ browser KEM executor never broadcasts for wrong account or missing capability (3.695966ms)
+✔ official QoreSeal ML-KEM proof opens only for the intended recipient (135.06516ms)
+✔ builds a public KEM registration plan without recipient secrets (81.199449ms)
+✔ builds 1 uqor prepare and release anchors under the memo limit (2.051983ms)
+✔ builds a public KEM fingerprint commitment without claiming registration (0.653933ms)
+✔ requires exact active signer before calling QoreX once (0.626864ms)
+✔ refuses mismatched account, absent capability, invalid digest and malformed release (1.117066ms)
+✔ refuses an early opening request (4.07937ms)
+✔ allows an opening request at the boundary (0.361944ms)
+✔ binds chain, letter, date, and registered recipient context (0.987966ms)
+✔ rejects a non-QoreChain recipient (0.425046ms)
+✔ formats the countdown without negative values (0.309887ms)
+✔ exports a recipient handoff with no plaintext or key shares (9.095422ms)
+✔ rejects a changed ciphertext, recipient context or digest (4.619868ms)
+✔ derives the unsigned registration only from verified bundle fields (5.674561ms)
+✔ official QoreSeal opens share A only for the matching recipient (114.478516ms)
+✔ connect requires native provider, selects only Diana, never calls signer (1.713385ms)
+✔ wallet success, EVM success, pending and classical are not hybrid on-chain proof (0.246884ms)
+✔ keeps request, broadcast, pending and confirmed evidence distinct (1.321558ms)
+✔ does not turn malformed evidence into success (0.381502ms)
+✔ splits and recombines a 256-bit content key (1.253547ms)
+✔ XOR needs both equal-length shares (0.436724ms)
+✔ encrypts and decrypts only with matching A and B (8.753829ms)
+✔ authenticated context cannot be changed (1.17368ms)
+✔ refuses to build a public B release before unlock (0.444745ms)
+✔ builds a public B release at unlock without plaintext or share A (1.010779ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 992.712591
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> future-post@0.1.0 build:browser
+> node scripts/build-browser.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+
+> future-post@0.1.0 audit:public
+> node scripts/audit-public-repo.mjs
+
+{
+  "schema": "future-post-public-repo-audit/v1",
+  "filesScanned": 74,
+  "textFilesScanned": 72,
+  "requiredFiles": 15,
+  "readmeRelativeLinks": 4,
+  "coverPng": "1200x675",
+  "secretPatternHits": 0,
+  "status": "PASS",
+  "failures": []
+}

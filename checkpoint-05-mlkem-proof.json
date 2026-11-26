@@ -1,0 +1,14 @@
+{
+  "schema": "future-post-local-mlkem-proof/v1",
+  "algorithm": "ML-KEM-1024",
+  "scenario": "private welcome letter for a new colleague's first day",
+  "benefit": "Only the intended colleague can open the private welcome letter",
+  "plaintextSha256": "a5fb014f4036331a918721ff347e49ae03804e8087c3acd922414916259f8a5a",
+  "envelopeSha256": "1852bee726e87d706c75d15f664dd165b4e804230a2087f6811ebc2d6c4bf8a3",
+  "publicKeySha256": "21f465c59425756a4532890778cd74ae4684a9b452c8040edaf269e75127d0a3",
+  "publicKeyBytes": 1568,
+  "envelopeBytes": 2388,
+  "matchingRecipientOpen": true,
+  "outsiderOpen": false,
+  "evidenceBoundary": "LOCAL_FUNCTIONAL_PROOF_NOT_CHAIN_REGISTRATION"
+}

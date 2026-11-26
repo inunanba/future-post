@@ -1,0 +1,11 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { keccak256 } from 'viem';
+import { buildDianaPlan, DIANA_RPC } from '../src/diana-plan.js';
+const a=JSON.parse(fs.readFileSync(new URL('../artifacts/FuturePostRelease.json',import.meta.url)));
+const b={chainId:9800,rpc:DIANA_RPC,from:'0x'+'11'.repeat(20),contract:'0x'+'22'.repeat(20),operation:'register',letterId:'0x'+'33'.repeat(32),recipientBinding:'0x'+'44'.repeat(32),ciphertextHash:'0x'+'55'.repeat(32),shareBCommitment:keccak256('0x'+'66'.repeat(32)),unlockAt:200,observedBlockTime:100};
+test('prepares a zero-value unsigned registration without any provider',()=>{const p=buildDianaPlan(b,a);assert.equal(p.status,'UNSIGNED_NOT_SENT');assert.equal(p.transaction.value,'0x0');assert.equal(p.transaction.to,b.contract);assert.ok(p.transaction.data.length>10);});
+test('rejects mainnet, wrong RPC, zero address, non-finite time, and early date',()=>{for(const delta of [{chainId:9801},{rpc:'https://evm.qore.host'},{from:'0x'+'00'.repeat(20)},{unlockAt:Infinity},{unlockAt:100}])assert.throws(()=>buildDianaPlan({...b,...delta},a));});
+test('release binds B commitment and time; no silent early call',()=>{const r={...b,operation:'release',shareB:'0x'+'66'.repeat(32),observedBlockTime:200};assert.ok(buildDianaPlan(r,a).transaction.data);assert.throws(()=>buildDianaPlan({...r,observedBlockTime:199},a),/TOO_EARLY/);assert.throws(()=>buildDianaPlan({...r,shareB:'0x'+'77'.repeat(32)},a),/commitment/);});
+test('deployment carries only compiled bytecode and zero value',()=>{const p=buildDianaPlan({...b,operation:'deploy'},a);assert.equal(p.transaction.data,a.bytecode);assert.equal(p.transaction.to,undefined);});

@@ -1,0 +1,30 @@
+request_id=R-20261125-grokbot-work-qorechain-build-01
+checkpoint=04-kem-register-page
+verification_time_jst=2026-11-25 15:05:57 JST
+network=qorechain-diana
+signing=0
+broadcast=0
+spend=0
+
+npm_run_check=PASS
+tests=32
+passed=32
+failed=0
+inline_module_syntax=PASS
+static_page_readback=PASS
+static_module_readback=PASS
+
+page=kem-register.html
+module=src/kem-register.js
+input=reviewed public future-post-native-plan/v1 JSON only
+exact_signer=qor1rgsq0sgpww6yevnmedlqe797tc4v57u4as0w52
+exact_message=/qorechain.pqc.v1.MsgRegisterKEMKey
+message_count=1
+exact_memo=future-post:v1|register-recipient-kem
+exact_gas=700000
+protobuf_checks=sender,algorithm_id_2,mlkem_public_key_1568_bytes,no_extra_fields
+secret_guards=seed,mnemonic,privateKey,secretKey,shareA,shareB,password
+one_shot=button_disabled_before_signAndBroadcast,session_latch,no_retry
+success_boundary=wallet_reported_code_0_hash_height_still_needs_chain_receipt_and_registry_readback
+
+known_limit=No real public ML-KEM plan, wallet signature, transaction, receipt or registry result was available to Work. Live execution remains the existing box operator's next step.

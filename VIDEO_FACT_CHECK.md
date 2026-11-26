@@ -1,0 +1,32 @@
+# Demo script fact check
+
+Checked against source, GROKBOT-10 box review and Diana evidence on 2026-11-25 JST. This sheet is internal review material and is not a recording approval.
+
+| Script statement | Source / independent evidence | State |
+|---|---|---|
+| First-day welcome is the central use case | `index.html` hero; GROKBOT-09/10 browser review | VERIFIED |
+| Official QoreSeal ML-KEM-1024 runs in the browser | `src/mlkem-proof.js`, bundled `dist/app.bundle.js`; GROKBOT-09/10 one-click browser result | VERIFIED |
+| Intended recipient opens | GROKBOT-10: `OPENED`; Work/Sena 38/38 tests | VERIFIED |
+| Outsider is refused | GROKBOT-10: `REFUSED`; stable `NOT_A_RECIPIENT` test | VERIFIED |
+| No private key or plaintext appears on the proof screen | UI renders only states and envelope SHA-256; source review | VERIFIED |
+| Diana fingerprint commitment exists | Tx `A6633E0F8D41F77FA8414EF62C2EE3CF1943686781E60EDC36D0FF6FC90A0E27` | VERIFIED |
+| QoreChain hybrid verification is present | GROKBOT-10 chain re-read: `PQCHybridSignature`; prior REST/RPC hybrid verification events | VERIFIED |
+| Transaction succeeded | REST/RPC readback: height 10719012, code 0, exact memo, hybrid verification events | VERIFIED |
+| Composer binds recipient/opening time/content context | `src/protocol.js`, `src/split-envelope.js`, tests | VERIFIED LOCALLY |
+| Product uses registered KEM key | Website registration was rejected before signature | DO NOT CLAIM |
+| Two-device or contract release is live | No live evidence | DO NOT SHOW OR CLAIM |
+
+## GROKBOT-10 repair checklist
+
+- Problem statement says why Future Post was made.
+- QoreSeal is named as QoreChain’s post-quantum tool and ML-KEM-1024 remains explicit.
+- Diana narration names QoreChain’s hybrid signature, height 10719012 and code 0.
+- Closing line names QoreSeal proof and a verifiable QoreChain commitment.
+- Credits begin with `Created by inunanba`.
+- Proof capture begins after `OPENED` / `REFUSED`; initial UI is `READY`.
+- Account 1 is used for the composer shot; only the waiting state and countdown are framed.
+- **Prepare share B release** is not pressed.
+
+## Visual pass required before recording
+
+Sena should run this revision against the current app and confirm shot order, captions, live link, Account 1, neutral scope labels and approximate 1:35 timing. That pass is review evidence, not recording itself. Recording begins only after Sena explicitly accepts the revised script.
