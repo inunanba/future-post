@@ -49,7 +49,7 @@ curl -s -X POST -H 'content-type: application/json' https://evm-testnet.qore.hos
   --data '{"jsonrpc":"2.0","id":1,"method":"eth_getCode","params":["0x0E5e1b9d41bFCe8a19f5dA4E55Dd6459F69E2b50","latest"]}'
 ```
 
-The returned code is the 1,560-byte runtime of `artifacts/FuturePostRelease.json`. Reading a letter id that does not exist returns the contract's own `LetterMissing()` error, as designed. Details are in [evidence/diana-contract-deploy.json](evidence/diana-contract-deploy.json). The deployer is a single-purpose testnet-only account funded from the official Diana faucet. This entry covers the contract deployment; registering and releasing a letter on this contract is the next step.
+The returned code is the 1,560-byte runtime of `artifacts/FuturePostRelease.json`. Reading a letter id that does not exist returns the contract's own `LetterMissing()` error, as designed. Details are in [evidence/diana-contract-deploy.json](evidence/diana-contract-deploy.json). The deployer is a single-purpose testnet-only account funded from the official Diana faucet. This entry covers the v1 contract deployment. A full register-and-release run on Diana is documented below for V2.
 
 ### FuturePostReleaseV2: letters only from a proven post-quantum key
 
@@ -73,6 +73,23 @@ v1 above remains the contract used in the demo and the video.
 
 Read-only check (no transaction, no keys): `npm run verify:diana-v2`. It confirms that the on-chain runtime (2,271 bytes) equals `deployedRuntimeBytecode` in `artifacts/FuturePostReleaseV2.json` and contains `0x…0a02`, that `pqcKeyStatus` reports the deployer as `registered=true`, `algorithmId=1`, `possessionProven=true` (2,592-byte ML-DSA-87 public key), that a simulated `registerLetter` from the deployer passes, and that the same call from an address without a key reverts with `SenderKeyNotProven(false, 0, false)`. Details: [evidence/diana-contract-v2-deploy.json](evidence/diana-contract-v2-deploy.json). Local tests (`test/contract-v2.test.js`) deploy the same production artifact on a local EVM with test code placed at `0x…0a02`, covering the proven, unregistered, not-proven, wrong-algorithm, inactive and malformed cases and release after key removal.
 
+### Live letter on Diana
+
+A real demo letter went through the whole time-lock flow on `FuturePostReleaseV2` on Diana testnet. It used the app's own modules (`envelopeContext`, `encryptLetter`, `sealShareA`, `createPublicBundle`, `registrationInputFromBundle`, `buildDianaPlan`): AES-256-GCM encryption with the content key split into share A and share B, share A sealed with QoreSeal to the ML-KEM-1024 key registered on chain for `qor1w6p3…laxq`, and only hashes plus the B commitment sent to the contract. The text is a short non-personal demo note. The recipient here is the single-purpose testnet account itself, so this is a one-account demo of the same path used for a letter to another person.
+
+| Step | Transaction | Block (UTC) | Result |
+|---|---|---|---|
+| EVM window opened (300 blocks, 2 transactions, 0.2 QOR bound) | `CC79F0EB…392F` | 10782933 | code 0 |
+| `registerLetter` (passes the `pqcKeyStatus` guard) | [`0xe7d5a114fe884bb605bd8b89fe5627d00a9e12f35b6a148adae53ceec4fb2469`](https://explore.qore.network/tx/0xe7d5a114fe884bb605bd8b89fe5627d00a9e12f35b6a148adae53ceec4fb2469) | 10782943 (10:21:07) | success, gas 146,859 |
+| Early `releaseShareB` simulation before the opening time | read-only `eth_call` | chain time 1795688474 < unlock 1795688645 | refused |
+| Opening time | 2026-11-26 10:24:05 UTC | | |
+| `releaseShareB` (sent after the opening time) | [`0x575d7e8a35aa97218ade2c3b0b670203f62fd30c3a44a72571fee8fe9490e09c`](https://explore.qore.network/tx/0x575d7e8a35aa97218ade2c3b0b670203f62fd30c3a44a72571fee8fe9490e09c) | 10783071 (10:24:08) | success, gas 54,231, `ShareBReleased` emitted |
+| EVM window closed | `631FA9B6…4482` | 10783080 | code 0, window gone |
+
+Registered about three minutes ahead of the opening time and released three seconds after it. After the release, the recipient's QoreSeal key opened share A, share B read from the on-chain `ShareBReleased` event completed the key, and the letter decrypted to the original text; a different QoreSeal key was refused (`NOT_A_RECIPIENT`) and a wrong share B did not decrypt. The public bundle is [evidence/live-letter-bundle.json](evidence/live-letter-bundle.json); the full record is [evidence/diana-live-letter.json](evidence/diana-live-letter.json).
+
+Re-check it read-only (no transaction, no keys): `npm run verify:diana-letter`. It reads both receipts and `getLetter`, and confirms that the registration block is before and the release block is at or after the opening time, that the ciphertext hash matches the bundle's ciphertext, that the released share B matches the registered commitment, and that the letter is marked released. Contract: [explorer](https://explore.qore.network/address/0x475b2c0BCaE1f1Fd029A514224A86d600Fe97287) (switch to Testnet).
+
 ## What works now
 
 - Responsive letter composer and locked/ready states.
@@ -93,8 +110,8 @@ Future Post is a first-day welcome letter for a new colleague: it is sealed to t
 |---|---|---|
 | ML-KEM-1024 | `@qorechain/qoreseal@0.1.0` using `sealToAddresses` / `open` | Official browser seal/open + outsider refusal tested. A testnet account has an ML-KEM-1024 key in the Diana KEM key registry (tx `25C75479…FB10A`, height 10780940), and a local seal-to-address and open round trip against that on-chain key passed ([evidence](evidence/kem-registry-roundtrip.json), read-only check: `npm run verify:diana-kem`) |
 | Reviewed recipient key | Local QoreSeal key plus public SHA-256 fingerprint | Local browser seal/open passes; Diana fingerprint anchor code 0 at height 10719012 |
-| ML-DSA binding | QoreX builds, hybrid-signs, and broadcasts the reviewed fingerprint commitment and later release messages | QoreX hybrid-signed fingerprint commitment and transfers read back on Diana; the full release flow on the deployed contract is the next step |
-| Client-side encryption/decryption | QoreSeal runs in the browser; plaintext and secret keys never go to an app server | Official local browser proof implemented; full reviewed-key/two-device integration is the next step |
+| ML-DSA binding | QoreX builds, hybrid-signs, and broadcasts the reviewed fingerprint commitment and later release messages | QoreX hybrid-signed fingerprint commitment and transfers read back on Diana; a full register-and-release run with hybrid-signed EVM-window transactions is recorded on `FuturePostReleaseV2` (see "Live letter on Diana") |
+| Client-side encryption/decryption | QoreSeal runs in the browser; plaintext and secret keys never go to an app server | Official local browser proof implemented; the live Diana letter was sealed with QoreSeal to an on-chain registered ML-KEM-1024 key and opened after release (single account); two-device integration is the next step |
 | Date lock | Sender device retains B; contract rejects publication before `unlockAt`; recipient combines QoreSeal-opened A with public B | B protocol selected; local round trip tested; `FuturePostRelease` deployed on Diana (see above) |
 | Testnet proof | Local seal/open + Diana fingerprint commitment + contract deployment + receipt readback | Local matching-recipient open and outsider refusal pass; fingerprint tx code 0, height 10719012; contract deployed at block 10780460 |
 | Licence | MIT | Included |
@@ -137,6 +154,10 @@ All on QoreChain Diana (`qorechain-diana`, EVM chain 9800). Machine-readable cop
 | `2F08BE425AC3645ED98F5D951F73C249F4BEB6158FAC45D5A925F759EDA6AB17` | 10782504 | Deployer: EVM window opened for one transaction (100 blocks, 1 transaction, 0.2 QOR bound) |
 | `0x4d3eac621bbd4efecd52c9c9b1e78c5eaeecdd0a7c932cf5b9e7028aaa7c1c2e` | 10782517 | Deployer: `FuturePostReleaseV2` deployment |
 | `82211B9AAF1698BD450FF80F1F7FB669E3468581EF1BBCC0B2B50B69705935FE` | 10782526 | Deployer: EVM window closed |
+| `CC79F0EB9B61B25B448C8DF8EFDCA83974B758AFCCFEAA77E9F63255EE05392F` | 10782933 | Deployer: EVM window opened for the live letter (300 blocks, 2 transactions, 0.2 QOR bound) |
+| `0xe7d5a114fe884bb605bd8b89fe5627d00a9e12f35b6a148adae53ceec4fb2469` | 10782943 | Deployer: `registerLetter` on `FuturePostReleaseV2` |
+| `0x575d7e8a35aa97218ade2c3b0b670203f62fd30c3a44a72571fee8fe9490e09c` | 10783071 | Deployer: `releaseShareB` on `FuturePostReleaseV2` |
+| `631FA9B6C9EACA231177B90F3F20F1CD0D495126406919D91AF5B890515B4482` | 10783080 | Deployer: EVM window closed |
 
 Read any Cosmos transaction at `https://api-testnet.qore.host/cosmos/tx/v1beta1/txs/<HASH>`; the EVM deployment is read through the EVM RPC (see above).
 
@@ -212,7 +233,7 @@ npm ci --ignore-scripts --no-audit --no-fund
 npm run check
 ```
 
-The test command compiles both contracts with pinned solc 0.8.30 before testing. Forty test cases pass, including the official QoreSeal browser-proof core, an in-memory EVM deployment/registration/release path, negative calls, and the V2 `pqcKeyStatus` rule exercised on the unchanged production artifact. Ganache runs without a listening server; its ephemeral accounts are unrelated to Diana. Its optional native µWS module may fall back to JavaScript.
+The test command compiles both contracts with pinned solc 0.8.30 before testing. Forty-one test cases pass, including the official QoreSeal browser-proof core, an in-memory EVM deployment/registration/release path, negative calls, and the V2 `pqcKeyStatus` rule exercised on the unchanged production artifact. Ganache runs without a listening server; its ephemeral accounts are unrelated to Diana. Its optional native µWS module may fall back to JavaScript.
 
 See the [Native evidence runbook](NATIVE_RUNBOOK.md). `npm run prepare:diana -- reviewed-public-input.json` creates an unsigned plan only. It never connects a signer or broadcasts. `wallet-check.html` asks the installed QoreX native provider for a Diana public account only; real extension/browser behavior remains to be verified. The main screen now centers the private first-day welcome and runs the bundled official QoreSeal ML-KEM proof. The timed A/B composer remains a local prototype; registering and releasing a letter on the deployed Diana contract is the next step.
 

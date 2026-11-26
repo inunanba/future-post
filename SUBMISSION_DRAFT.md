@@ -54,8 +54,8 @@ The idea of a time-locked letter is not claimed as new.
 - Reviewed fingerprint address: `qor1rgsq0sgpww6yevnmedlqe797tc4v57u4as0w52` (self-commitment only; not KEM registration)
 - KEM registry lookup: PASS for the single-purpose testnet account `qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq` (tx `25C7547930CB389AFA7742EFAF53D232B65DBFA38EE6B0D9CC64F82DC49FB10A`, height 10780940). The browser proof screen still uses fresh in-browser keys and does not read the registry.
 - Public-key fingerprint anchor: PASS — code 0, height 10719012, tx `A6633E0F8D41F77FA8414EF62C2EE3CF1943686781E60EDC36D0FF6FC90A0E27`; exact 1 uqor self-transfer memo read back
-- Early release rejection: local in-memory EVM tests PASS; a live Diana register/release of a letter on the deployed contract is a separate step
-- Accepted B release on Diana: a separate step (the contract is deployed; a letter has not yet been registered or released on it)
+- Early release rejection: local in-memory EVM tests PASS; on Diana a read-only simulation of an early release was refused before the opening time
+- Accepted B release on Diana: a demo letter was registered (block 10782943) and released after its opening time (block 10783071) on FuturePostReleaseV2; recipient opened it afterwards (single-account demo, see README "Live letter on Diana")
 - Correct-recipient open evidence: local official-QoreSeal ML-KEM proof PASS, including a local seal-to-address and open against the on-chain registered key
 - Outsider refusal: local official-QoreSeal proof PASS (`NOT_A_RECIPIENT`), including the on-chain-key round trip
 - Exact package: `@qorechain/qoreseal@0.1.0`

@@ -20,7 +20,11 @@
     {"hash": "25C7547930CB389AFA7742EFAF53D232B65DBFA38EE6B0D9CC64F82DC49FB10A", "height": 10780940, "from": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq", "what": "MsgRegisterKEMKey (ML-KEM-1024), PQCHybridSignature"},
     {"hash": "2F08BE425AC3645ED98F5D951F73C249F4BEB6158FAC45D5A925F759EDA6AB17", "height": 10782504, "from": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq", "what": "MsgOpenEVMWindow (100 blocks, 1 transaction, 0.2 QOR bound), PQCHybridSignature"},
     {"hash": "0x4d3eac621bbd4efecd52c9c9b1e78c5eaeecdd0a7c932cf5b9e7028aaa7c1c2e", "height": 10782517, "from": "0x768310cBCD782BDa4fd3cf5Bbb96b6E291E3F103", "what": "EVM deployment of FuturePostReleaseV2 at 0x475b2c0BCaE1f1Fd029A514224A86d600Fe97287"},
-    {"hash": "82211B9AAF1698BD450FF80F1F7FB669E3468581EF1BBCC0B2B50B69705935FE", "height": 10782526, "from": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq", "what": "MsgCloseEVMWindow, PQCHybridSignature"}
+    {"hash": "82211B9AAF1698BD450FF80F1F7FB669E3468581EF1BBCC0B2B50B69705935FE", "height": 10782526, "from": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq", "what": "MsgCloseEVMWindow, PQCHybridSignature"},
+    {"hash": "CC79F0EB9B61B25B448C8DF8EFDCA83974B758AFCCFEAA77E9F63255EE05392F", "height": 10782933, "from": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq", "what": "MsgOpenEVMWindow (300 blocks, 2 transactions, 0.2 QOR bound), PQCHybridSignature"},
+    {"hash": "0xe7d5a114fe884bb605bd8b89fe5627d00a9e12f35b6a148adae53ceec4fb2469", "height": 10782943, "from": "0x768310cBCD782BDa4fd3cf5Bbb96b6E291E3F103", "what": "registerLetter on FuturePostReleaseV2 (demo letter)"},
+    {"hash": "0x575d7e8a35aa97218ade2c3b0b670203f62fd30c3a44a72571fee8fe9490e09c", "height": 10783071, "from": "0x768310cBCD782BDa4fd3cf5Bbb96b6E291E3F103", "what": "releaseShareB on FuturePostReleaseV2 (after the opening time)"},
+    {"hash": "631FA9B6C9EACA231177B90F3F20F1CD0D495126406919D91AF5B890515B4482", "height": 10783080, "from": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq", "what": "MsgCloseEVMWindow, PQCHybridSignature"}
   ],
   "quantum_pass_requirements": {
     "create-qorechain-dapp": "scaffold-provenance.json (create-qorechain-dapp 0.14.0, template evm-solidity, network testnet)",

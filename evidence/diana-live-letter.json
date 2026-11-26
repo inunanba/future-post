@@ -1,0 +1,74 @@
+{
+  "network": "QoreChain Diana testnet (qorechain-diana)",
+  "evm_chain_id": 9800,
+  "contract": "FuturePostReleaseV2",
+  "contract_address": "0x475b2c0BCaE1f1Fd029A514224A86d600Fe97287",
+  "sender": "0x768310cBCD782BDa4fd3cf5Bbb96b6E291E3F103",
+  "sender_qor_address": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq",
+  "recipient": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq",
+  "recipient_note": "Demo letter sealed to the single-purpose testnet account's own registered ML-KEM-1024 key. A letter to oneself is a personal commitment; it exercises the same seal, commit, lock and release path as a letter to another person.",
+  "letter_id_text": "diana-demo-20261126",
+  "letter_id": "0x920760040e5b1c6ecac182b14a6a1bf66610577bc24db541464bb55895505d8a",
+  "content": "Demo, non-personal text. Recovered after release: \"Demo letter on QoreChain Diana testnet: this note stayed sealed until its opening time. Hello from Future Post!\" (sha256 c1ef8ec871b08b9bdad6fb33eb834c65d22605b65d9a72714836281410a29561)",
+  "built_with": [
+    "src/protocol.js envelopeContext",
+    "src/split-envelope.js encryptLetter (AES-256-GCM, content key split A XOR B)",
+    "src/qoreseal-adapter.js sealShareA (QoreSeal ML-KEM-1024 to the on-chain registered key)",
+    "src/public-bundle.js createPublicBundle / registrationInputFromBundle",
+    "src/diana-plan.js buildDianaPlan"
+  ],
+  "public_bundle": "evidence/live-letter-bundle.json",
+  "bundle_digest": "0x4da0888d896477bba29719107b629eb218ee40e7b0bfc3ea081f3ad3f0d8cbb1",
+  "unlock_at_utc": "2026-11-26T10:24:05.000Z",
+  "unlock_at_unix": 1795688645,
+  "register": {
+    "tx_hash": "0xe7d5a114fe884bb605bd8b89fe5627d00a9e12f35b6a148adae53ceec4fb2469",
+    "block": 10782943,
+    "block_hash": "0x9bc103cddfdd4cd241a49acbaffbc0324eae36e46fb9945dbe78dff5ae7e0194",
+    "block_time_utc": "2026-11-26T10:21:07Z",
+    "status": "success",
+    "gas_used": 146859,
+    "note": "registerLetter passed the pqcKeyStatus guard (sender registered, algorithm 1, possession proven)"
+  },
+  "early_release_check": "Before the opening time a read-only simulation of releaseShareB (eth_call) was refused at chain time 1795688474 (unlock 1795688645).",
+  "release": {
+    "tx_hash": "0x575d7e8a35aa97218ade2c3b0b670203f62fd30c3a44a72571fee8fe9490e09c",
+    "block": 10783071,
+    "block_hash": "0x9bcdab4abf908e2200548c1a85b5adbf3a54f4cf03f5d7b92740b088ecfb554b",
+    "block_time_utc": "2026-11-26T10:24:08Z",
+    "status": "success",
+    "gas_used": 54231,
+    "share_b_released": "0xa26237cb6d15adce8fbdf2e6aef1353275a543f549d279e63186ebe6020b7911",
+    "note": "sent once chain time passed the opening time; ShareBReleased event emitted"
+  },
+  "evm_window": {
+    "open": {
+      "tx_hash": "CC79F0EB9B61B25B448C8DF8EFDCA83974B758AFCCFEAA77E9F63255EE05392F",
+      "height": 10782933,
+      "blocks": 300,
+      "max_txs": 2,
+      "max_value_uqor": 200000
+    },
+    "close": {
+      "tx_hash": "631FA9B6C9EACA231177B90F3F20F1CD0D495126406919D91AF5B890515B4482",
+      "height": 10783080
+    },
+    "after_close": "query pqc evm-window: found=false, live=false",
+    "signature": "PQCHybridSignature on both"
+  },
+  "open_after_release": {
+    "commitment_matches": true,
+    "plaintext_matches": true,
+    "outsider_key_opens_share_a": "REFUSED:NOT_A_RECIPIENT",
+    "wrong_share_b_decrypts": "REFUSED",
+    "how": "The recipient's QoreSeal key opened sealed share A; combined with share B read from the ShareBReleased event it decrypted the ciphertext. The recipient secret key is private and not in this repository."
+  },
+  "read_only_verification": "npm run verify:diana-letter (eth_call / receipts only, all checks true at block time of verification)",
+  "explorer": {
+    "register": "https://explore.qore.network/tx/0xe7d5a114fe884bb605bd8b89fe5627d00a9e12f35b6a148adae53ceec4fb2469",
+    "release": "https://explore.qore.network/tx/0x575d7e8a35aa97218ade2c3b0b670203f62fd30c3a44a72571fee8fe9490e09c",
+    "contract": "https://explore.qore.network/address/0x475b2c0BCaE1f1Fd029A514224A86d600Fe97287",
+    "note": "Open with the explorer switched to Testnet."
+  },
+  "scope": "One demo letter registered and released on FuturePostReleaseV2 on testnet. Recipient binding is an opaque hash; V2 checks the sender key only. This is a single-account demo, not a two-device test. v1 is unchanged."
+}
