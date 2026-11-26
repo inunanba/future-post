@@ -1,0 +1,33 @@
+{
+  "network": "QoreChain Diana testnet (qorechain-diana)",
+  "account": "qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq",
+  "evm_address": "0x768310cBCD782BDa4fd3cf5Bbb96b6E291E3F103",
+  "registration": {
+    "message": "/qorechain.pqc.v1.MsgRegisterKEMKey",
+    "tx_hash": "25C7547930CB389AFA7742EFAF53D232B65DBFA38EE6B0D9CC64F82DC49FB10A",
+    "height": 10780940,
+    "code": 0,
+    "signature": "PQCHybridSignature (secp256k1 + ML-DSA-87), events pqc_hybrid_verify and pqc_kem_key_registered",
+    "algorithm": "mlkem1024 (algorithm_id 2)",
+    "key_sha256": "4e5aa34f3a76618b64d8a0ec8b8b43e2b43d5446371bff586d9c1c343783b49c",
+    "registry_read": "https://api-testnet.qore.host/qorechain/pqc/v1/kem/qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq"
+  },
+  "local_roundtrip": {
+    "ran_at_utc": "2026-11-26T09:33:57Z",
+    "library": "@qorechain/qoreseal 0.1.0",
+    "steps": [
+      "read the account's ML-KEM-1024 key from the on-chain registry (fetchKemKey)",
+      "confirmed it equals the locally generated public key",
+      "sealToAddresses to that address (mode mlkem, purpose future-post-welcome) -> 1 recipient entry, 1737-byte envelope",
+      "open with the matching secret key -> plaintext matches",
+      "open with a fresh outsider key -> refused (NOT_A_RECIPIENT)",
+      "open under a different purpose -> refused (DECRYPTION_FAILED)"
+    ],
+    "envelope_sha256": "32a7ccf9be4dc1ac7e1e9c3a0baa8c1284baeae36753ac6300ad3899b31ccbd5",
+    "plaintext_matches": true,
+    "outsider_refused": true,
+    "wrong_purpose_refused": true
+  },
+  "scope": "A published ML-KEM-1024 key for this single-purpose testnet account, and a local seal-to-address and open round trip against the on-chain key. The browser app in this repository does not read the registry; its proof screen uses fresh in-browser keys.",
+  "secret_material": "The matching secret key is held privately and is not part of this repository."
+}

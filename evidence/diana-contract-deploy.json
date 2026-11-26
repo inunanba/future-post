@@ -22,5 +22,11 @@
     "note": "Open with the explorer switched to Testnet."
   },
   "read_check": "getLetter(0x1111...1111) on the deployed contract returns the contract's own LetterMissing() error for an id that has no letter, as designed.",
-  "scope": "Deployment of the release contract. Registering and releasing a letter on this contract is a separate step and is not claimed here."
+  "scope": "Deployment of the release contract. Registering and releasing a letter on this contract is a separate step and is not claimed here.",
+  "kem_registry": {
+    "tx_hash": "25C7547930CB389AFA7742EFAF53D232B65DBFA38EE6B0D9CC64F82DC49FB10A",
+    "height": 10780940,
+    "details": "evidence/kem-registry-roundtrip.json"
+  },
+  "related_evidence": "evidence/diana-testnet-activity.json"
 }

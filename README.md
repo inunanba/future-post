@@ -6,7 +6,7 @@ The design keeps the letter body on the client and uses recipient encryption to 
 
 Created by **inunanba**. License: [MIT](LICENSE).
 
-> Current evidence level: **product prototype plus browser ML-KEM proof and a reviewed Diana fingerprint commitment**. The main screen now runs official QoreSeal ML-KEM-1024 seal/open with intended-recipient success and outsider refusal. A separate QoreX hybrid-signed Diana transaction committed the reviewed public-key fingerprint and was read back with code 0. Website KEM registration remains `BLOCKED_CAPABILITY` with no retry; the fingerprint transaction is not registration or live decryption proof.
+> Current evidence level: **working product prototype with live Diana evidence**. The main screen runs official QoreSeal ML-KEM-1024 seal/open with intended-recipient success and outsider refusal in the browser. On the QoreChain Diana testnet there are QoreX hybrid-signed transactions, the `FuturePostRelease` contract deployment, an EVM window opened and closed, and an ML-KEM-1024 key published in the on-chain KEM key registry with a local seal-to-address and open round trip. See [Testnet addresses and transactions](#testnet-addresses-and-transactions).
 
 ![Future Post mascot](assets/logo.svg)
 
@@ -65,17 +65,54 @@ The returned code is the 1,560-byte runtime of `artifacts/FuturePostRelease.json
 
 ## Requirements and evidence
 
+Future Post is a first-day welcome letter for a new colleague: it is sealed to the recipient's post-quantum key and released on the first day.
+
 | Requirement | Planned implementation | Current evidence |
 |---|---|---|
-| ML-KEM-1024 | `@qorechain/qoreseal@0.1.0` using `sealToAddresses` / `open` | Official browser seal/open + outsider refusal tested; website registration `BLOCKED_CAPABILITY`, no retry |
-| Reviewed recipient key | Local QoreSeal key plus public SHA-256 fingerprint | Local browser seal/open passes; Diana fingerprint anchor code 0 at height 10719012; no registry claim |
-| ML-DSA binding | QoreX builds, hybrid-signs, and broadcasts the reviewed fingerprint commitment and later release messages | QoreX hybrid-signed fingerprint commitment read back on Diana; full release flow remains NOT_RUN |
-| Client-side encryption/decryption | QoreSeal runs in the browser; plaintext and secret keys never go to an app server | Official local browser proof implemented; full reviewed-key/two-device integration remains NOT_RUN |
-| Date lock | Sender device retains B; contract rejects publication before `unlockAt`; recipient combines QoreSeal-opened A with public B | B protocol selected; local round trip tested, contract/Diana evidence pending |
-| Testnet proof | Local seal/open + optional Diana fingerprint commitment + receipt readback | Local matching-recipient open and outsider refusal pass; fingerprint tx code 0, height 10719012 |
+| ML-KEM-1024 | `@qorechain/qoreseal@0.1.0` using `sealToAddresses` / `open` | Official browser seal/open + outsider refusal tested. A testnet account has an ML-KEM-1024 key in the Diana KEM key registry (tx `25C75479…FB10A`, height 10780940), and a local seal-to-address and open round trip against that on-chain key passed ([evidence](evidence/kem-registry-roundtrip.json), read-only check: `npm run verify:diana-kem`) |
+| Reviewed recipient key | Local QoreSeal key plus public SHA-256 fingerprint | Local browser seal/open passes; Diana fingerprint anchor code 0 at height 10719012 |
+| ML-DSA binding | QoreX builds, hybrid-signs, and broadcasts the reviewed fingerprint commitment and later release messages | QoreX hybrid-signed fingerprint commitment and transfers read back on Diana; the full release flow on the deployed contract is the next step |
+| Client-side encryption/decryption | QoreSeal runs in the browser; plaintext and secret keys never go to an app server | Official local browser proof implemented; full reviewed-key/two-device integration is the next step |
+| Date lock | Sender device retains B; contract rejects publication before `unlockAt`; recipient combines QoreSeal-opened A with public B | B protocol selected; local round trip tested; `FuturePostRelease` deployed on Diana (see above) |
+| Testnet proof | Local seal/open + Diana fingerprint commitment + contract deployment + receipt readback | Local matching-recipient open and outsider refusal pass; fingerprint tx code 0, height 10719012; contract deployed at block 10780460 |
 | Licence | MIT | Included |
 | Cover | Self-made 1200×675 SVG source | PNG 68,191 bytes and WebP 23,154 bytes; dimensions verified |
 | AI disclosure | `AI_USAGE.md` | Included |
+
+### Quantum Pass requirements
+
+| Quantum Pass requirement | Evidence |
+|---|---|
+| Built with create-qorechain-dapp | [scaffold-provenance.json](scaffold-provenance.json): create-qorechain-dapp 0.14.0, template `evm-solidity`, network `testnet` |
+| Connect QoreX | QoreX account `qor1rgsq0sgpww6yevnmedlqe797tc4v57u4as0w52`: post-quantum key registration (tx `D7C896FC…33118`) and the site-link transaction (tx `66D1DA41…ABB73`) |
+| Deploy on testnet | `FuturePostRelease` at `0x0E5e1b9d41bFCe8a19f5dA4E55Dd6459F69E2b50`, tx `0x97090531…3281d`, block 10780460 |
+| One hybrid-signed transaction | Several, each carrying a `PQCHybridSignature`: `9089AF34…C75A04`, `A6633E0F…0A0E27`, `66D1DA41…ABB73` (QoreX) and `4E6A1BA6…20672`, `EDE2074C…18A79`, `25C75479…FB10A` |
+
+### Testnet addresses and transactions
+
+All on QoreChain Diana (`qorechain-diana`, EVM chain 9800). Machine-readable copy: [evidence/diana-testnet-activity.json](evidence/diana-testnet-activity.json).
+
+| Address | What it did |
+|---|---|
+| `qor1rgsq0sgpww6yevnmedlqe797tc4v57u4as0w52` | Team QoreX account: registered its hybrid post-quantum key, linked to the Build Before Q-Day site, sent the fingerprint commitment and a transfer |
+| `qor1r274urptm66u0kn6eujalcl0v7sz5tj0tus05t` | QoreX Ethereum-type (coin 60) account of the same wallet: received a 10 QOR test transfer |
+| `qor1w6p3pj7d0q4a5n7neadmh94ku2g78ugrr2laxq` (`0x768310cBCD782BDa4fd3cf5Bbb96b6E291E3F103`) | Single-purpose testnet deployer: registered its post-quantum key, opened and closed an EVM window, deployed the contract, published its ML-KEM-1024 key |
+| `0x0E5e1b9d41bFCe8a19f5dA4E55Dd6459F69E2b50` | `FuturePostRelease` contract |
+
+| Transaction | Height | What |
+|---|---|---|
+| `D7C896FCB667982525BD3A10BAABD2E60674ED773827C362C322967C4F333118` | 10704698 | Team account: post-quantum key registration with proof of possession |
+| `66D1DA417741F8FA9142C7AF8279AA48A7CC164189D98969B80C896F5F6ABB73` | 10704701 | Team account: hybrid-signed site-link transaction |
+| `9089AF34B30B6D863148048F7036E329248216F5FA1D42C56D6EBBDE40C75A04` | 10706200 | Team account: hybrid-signed 10 QOR transfer to the coin-60 account |
+| `A6633E0F8D41F77FA8414EF62C2EE3CF1943686781E60EDC36D0FF6FC90A0E27` | 10719012 | Team account: hybrid-signed fingerprint commitment |
+| `C522F36AD4EF67A1AE572FB3B831A6CF141E3E47A9FE95A65A02B839AC3ACB16` | 10780413 | Official faucet payment to the deployer |
+| `C48AB7252E742E4E479F8CDA07976760DA0DFEAF8BBB904E22CEEA53A9DB14CD` | 10780438 | Deployer: post-quantum key registration with proof of possession |
+| `4E6A1BA6B69EE4DA1812F0F5369F5635291C5136DF0D76D08798C2542BB20672` | 10780449 | Deployer: EVM window opened (300 blocks, 3 transactions, 1 QOR cap) |
+| `0x97090531c63c695af28ff1791e0cdc01800ef11439238f56aa32efb7a293281d` | 10780460 | Deployer: `FuturePostRelease` deployment |
+| `EDE2074CDD0D1A5A2D73B6DD2394D9F1A9190D9F8C5464486235E5A4C9108A79` | 10780475 | Deployer: EVM window closed |
+| `25C7547930CB389AFA7742EFAF53D232B65DBFA38EE6B0D9CC64F82DC49FB10A` | 10780940 | Deployer: ML-KEM-1024 key published in the KEM key registry |
+
+Read any Cosmos transaction at `https://api-testnet.qore.host/cosmos/tx/v1beta1/txs/<HASH>`; the EVM deployment is read through the EVM RPC (see above).
 
 ## Selected B protocol
 

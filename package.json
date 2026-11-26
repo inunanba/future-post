@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "npm run compile && node --test test/*.test.js",
-    "check": "npm test && npm run build:browser && npm run audit:public && node --check src/protocol.js && node --check src/split-envelope.js && node --check src/qoreseal-adapter.js && node --check src/diana-plan.js && node --check src/qorex-session.js && node --check src/public-bundle.js && node --check src/receipt-state.js && node --check src/native-plan.js && node --check src/kem-register.js && node --check src/hybrid-proof.js && node --check src/mlkem-proof.js && node --check src/app.js && node --check scripts/export-public-bundle.mjs && node --check scripts/prepare-registration.mjs && node --check scripts/prepare-native-kem.mjs && node --check scripts/prepare-native-anchor.mjs && node --check scripts/prepare-hybrid-proof.mjs && node --check scripts/prove-local-mlkem.mjs && node --check scripts/build-browser.mjs && node --check scripts/audit-public-repo.mjs",
+    "check": "npm test && npm run build:browser && npm run audit:public && node --check src/protocol.js && node --check src/split-envelope.js && node --check src/qoreseal-adapter.js && node --check src/diana-plan.js && node --check src/qorex-session.js && node --check src/public-bundle.js && node --check src/receipt-state.js && node --check src/native-plan.js && node --check src/kem-register.js && node --check src/hybrid-proof.js && node --check src/mlkem-proof.js && node --check src/app.js && node --check scripts/export-public-bundle.mjs && node --check scripts/prepare-registration.mjs && node --check scripts/prepare-native-kem.mjs && node --check scripts/prepare-native-anchor.mjs && node --check scripts/prepare-hybrid-proof.mjs && node --check scripts/prove-local-mlkem.mjs && node --check scripts/build-browser.mjs && node --check scripts/audit-public-repo.mjs && node --check scripts/verify-diana-kem.mjs",
     "build:browser": "node scripts/build-browser.mjs",
     "audit:public": "node scripts/audit-public-repo.mjs",
     "compile": "node scripts/compile.mjs",
@@ -16,7 +16,8 @@
     "prepare:native-kem": "node scripts/prepare-native-kem.mjs",
     "prepare:native-anchor": "node scripts/prepare-native-anchor.mjs",
     "prepare:hybrid-proof": "node scripts/prepare-hybrid-proof.mjs",
-    "prove:mlkem": "node scripts/prove-local-mlkem.mjs"
+    "prove:mlkem": "node scripts/prove-local-mlkem.mjs",
+    "verify:diana-kem": "node scripts/verify-diana-kem.mjs"
   },
   "license": "MIT",
   "dependencies": {
