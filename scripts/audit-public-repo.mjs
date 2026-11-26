@@ -17,6 +17,15 @@ const secretRules = [
   ["Slack token", /\bxox[baprs]-[A-Za-z0-9-]{10,}\b/],
   ["EVM private key assignment", /\bprivate[_ -]?key\s*[:=]\s*["']?0x[0-9a-fA-F]{64}\b/i]
 ];
+const internalMarkerRules = [
+  ["workspace path", /\/workspace\//],
+  ["bus path", /\bbus\//],
+  ["inbox path", /\binbox\//],
+  ["work queue marker", /WORK_QUEUE/],
+  ["internal request id", /\bR-20\d{6}-/],
+  ["private repository name", /test-mon/]
+];
+const internalMarkerSkip = new Set(["scripts/audit-public-repo.mjs", "package-lock.json"]);
 const forbiddenPublicClaims = [
   "Diana registry path pending",
   "official QoreSeal registry integration",
@@ -55,6 +64,9 @@ for (const [index, file] of files.entries()) {
   const text = await readFile(file, "utf8");
   textFilesScanned += 1;
   for (const [name, pattern] of secretRules) if (pattern.test(text)) failures.push(`${name}: ${path}`);
+  if (!internalMarkerSkip.has(path) && !path.startsWith("dist/")) {
+    for (const [name, pattern] of internalMarkerRules) if (pattern.test(text)) failures.push(`internal marker (${name}): ${path}`);
+  }
   if (["README.md", "SUBMISSION_DRAFT.md", "VIDEO_STORYBOARD.md", "AI_USAGE.md"].includes(path)) {
     for (const phrase of forbiddenPublicClaims) if (text.includes(phrase)) failures.push(`stale public claim in ${path}: ${phrase}`);
   }
